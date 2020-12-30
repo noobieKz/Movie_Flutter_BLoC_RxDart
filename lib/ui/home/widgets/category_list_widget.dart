@@ -7,7 +7,13 @@ class CategoryListWidget extends StatefulWidget {
 }
 
 class _CategoryListWidgetState extends State<CategoryListWidget> {
-  final List<String> _categories = ["In Theater", "Box Office", "Coming Soon"];
+  final List<String> _categories = [
+    "Newest",
+    "Now Playing",
+    "Popular",
+    "Top Rated",
+    "Coming Soon"
+  ];
   int _selectedCategory = 0;
 
   @override

@@ -2,6 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/data/movie_list_response.dart';
+import 'package:flutter_sample/ui/common/background_black_gradient.dart';
+import 'package:flutter_sample/ui/common/image_loader.dart';
+import 'package:flutter_sample/ui/common/view_all_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MovieListSlider extends StatefulWidget {
   final List<Movie> movies;
@@ -34,22 +38,33 @@ class _MovieListSliderState extends State<MovieListSlider> {
       var width = MediaQuery.of(context).size.width;
       return Container(
         padding: EdgeInsets.only(top: 8),
-        child: CarouselSlider(
-          options: CarouselOptions(
-            height: width,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 8),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            pauseAutoPlayOnTouch: true,
-            enlargeCenterPage: true,
+        child: Column(children: [
+          ViewAllButton(
+            label: "View All",
+            icon: FaIcon(
+              FontAwesomeIcons.arrowRight,
+              size: 20,
+              color: Colors.white.withOpacity(0.8),
+            ),
           ),
-          items: movies.map((e) => _buildItemSlider(e)).toList(),
-        ),
+          SizedBox(height: 8,),
+          CarouselSlider(
+            options: CarouselOptions(
+              height: width,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 8),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              pauseAutoPlayOnTouch: true,
+              enlargeCenterPage: true,
+            ),
+            items: movies.map((e) => _buildItemSlider(e)).toList(),
+          ),
+        ]),
       );
     }
   }
@@ -59,55 +74,23 @@ class _MovieListSliderState extends State<MovieListSlider> {
       margin: EdgeInsets.only(left: 5, right: 5, bottom: 20),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
+          print("https://image.tmdb.org/t/p/w500${movie.backdropPath}");
           return ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Stack(
                 children: [
-                  Image.network(
-                    'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
-                    fit: BoxFit.cover,
-                    height: constraints.biggest.height,
+                  ImageLoader(
                     width: constraints.biggest.width,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        ),
-                      );
-                    },
+                    height: constraints.biggest.height,
+                    imageUrl:
+                        'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
                   ),
                   Positioned(
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: Container(
+                    child: BackgroundBlackGradient(
                       padding: EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.black26,
-                              Colors.black38,
-                              Colors.black54,
-                              Colors.black87
-                            ],
-                            stops: [
-                              0.3,
-                              0.5,
-                              0.7,
-                              0.9
-                            ],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight),
-                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
