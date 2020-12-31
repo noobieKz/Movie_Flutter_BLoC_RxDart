@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_sample/data/movie_list_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/ui/common/background_black_gradient.dart';
 import 'package:flutter_sample/ui/common/image_loader.dart';
 import 'package:flutter_sample/ui/common/view_all_button.dart';
@@ -47,7 +47,9 @@ class _MovieListSliderState extends State<MovieListSlider> {
               color: Colors.white.withOpacity(0.8),
             ),
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           CarouselSlider(
             options: CarouselOptions(
               height: width,
@@ -74,7 +76,6 @@ class _MovieListSliderState extends State<MovieListSlider> {
       margin: EdgeInsets.only(left: 5, right: 5, bottom: 20),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          print("https://image.tmdb.org/t/p/w500${movie.backdropPath}");
           return ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Stack(
@@ -90,7 +91,8 @@ class _MovieListSliderState extends State<MovieListSlider> {
                     left: 0,
                     right: 0,
                     child: BackgroundBlackGradient(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -107,23 +109,37 @@ class _MovieListSliderState extends State<MovieListSlider> {
                           SizedBox(
                             height: 8,
                           ),
-                          RatingBar.builder(
-                              unratedColor: Colors.white54,
-                              itemSize: 16.0,
-                              initialRating: movie.voteAverage / 2,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 2.0),
-                              itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.yellow[600],
-                                  ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              })
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                movie.voteAverage.roundToDouble().toString(),
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              RatingBar.builder(
+                                  unratedColor: Colors.white54,
+                                  itemSize: 16.0,
+                                  initialRating: movie.voteAverage / 2,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemPadding:
+                                      EdgeInsets.symmetric(horizontal: 2.0),
+                                  itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.yellow[600],
+                                      ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  }),
+                            ],
+                          )
                         ],
                       ),
                     ),

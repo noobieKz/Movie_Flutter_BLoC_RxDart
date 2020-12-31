@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/data/api_movie.dart';
-import 'package:flutter_sample/data/movie_list_response.dart';
-import 'package:flutter_sample/ui/common/view_all_button.dart';
+import 'package:flutter_sample/data/remote/api_movie.dart';
+import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/ui/home/widgets/category_list_widget.dart';
 import 'package:flutter_sample/ui/home/widgets/genre_list_widget.dart';
+import 'package:flutter_sample/ui/home/widgets/movie_list_widget.dart';
 import 'package:flutter_sample/ui/home/widgets/movie_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -28,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: _buildAppBar(),
         backgroundColor: bgColor,
-        appBar: buildAppBar(),
         body: FutureBuilder<MovieListResponse>(
             future: movies,
             builder: (
@@ -45,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       MovieListSlider(
                         movies: movies,
                       ),
-                      SizedBox(height: 16,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       GenreListWidget(
                         genres: [
                           "Wtf",
@@ -61,6 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Some genere there",
                           "Oh noo!!"
                         ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      MovieListWidget(
+                        movies: movies,
                       )
                     ],
                   ),
@@ -71,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }));
   }
 
-  AppBar buildAppBar() {
+  Widget _buildAppBar() {
     return AppBar(
       centerTitle: true,
       backgroundColor: Colors.transparent,

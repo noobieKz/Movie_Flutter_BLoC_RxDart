@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'movie_list_response.dart';
+import 'response/movie_list_response.dart';
 
 class ApiMovie {
   Dio _dio = Dio();

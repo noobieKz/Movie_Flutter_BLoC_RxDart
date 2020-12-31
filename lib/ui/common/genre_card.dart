@@ -12,8 +12,9 @@ class GenreCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-          color: Color(0xFF243142), borderRadius: BorderRadius.circular(20)),
+          color: kColorChipItem, borderRadius: BorderRadius.circular(20)),
       child: FlatButton(
+        splashColor: kColorItemDarker,
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onPressed: () {},

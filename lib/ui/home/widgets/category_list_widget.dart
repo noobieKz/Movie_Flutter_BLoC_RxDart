@@ -7,13 +7,7 @@ class CategoryListWidget extends StatefulWidget {
 }
 
 class _CategoryListWidgetState extends State<CategoryListWidget> {
-  final List<String> _categories = [
-    "Newest",
-    "Now Playing",
-    "Popular",
-    "Top Rated",
-    "Coming Soon"
-  ];
+
   int _selectedCategory = 0;
 
   @override
@@ -26,7 +20,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
           return _itemCategory(index, context);
         },
         scrollDirection: Axis.horizontal,
-        itemCount: _categories.length,
+        itemCount: listCategory.length,
       ),
     );
   }
@@ -44,7 +38,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              _categories[index],
+              listCategory[index].name,
               style: Theme.of(context).textTheme.headline5.copyWith(
                     fontWeight: FontWeight.w600,
                     color: index == _selectedCategory
