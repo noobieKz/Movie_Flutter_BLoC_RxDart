@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/constants.dart';
+import 'package:flutter_sample/data/local/category.dart';
 
 class CategoryListWidget extends StatefulWidget {
+  final Function(Category) onCategoryChange;
+
+  const CategoryListWidget({Key key, this.onCategoryChange}) : super(key: key);
+
   @override
   _CategoryListWidgetState createState() => _CategoryListWidgetState();
 }
 
 class _CategoryListWidgetState extends State<CategoryListWidget> {
-
   int _selectedCategory = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: kDefaultPadding),
+      margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
       height: 60,
       child: ListView.builder(
         itemBuilder: (_, index) {
@@ -31,7 +35,10 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
       child: GestureDetector(
         onTap: () {
           setState(() {
-            _selectedCategory = index;
+            if (_selectedCategory != index) {
+              _selectedCategory = index;
+              widget.onCategoryChange(listCategory[index]);
+            }
           });
         },
         child: Column(
@@ -47,7 +54,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                   ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+              margin: EdgeInsets.only(top: kDefaultPadding / 2),
               height: 6,
               width: 60,
               decoration: BoxDecoration(

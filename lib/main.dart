@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'data/repository.dart';
+import 'ui/home/home_bloc.dart';
 import 'ui/home/home_screen.dart';
 
 void main() {
@@ -11,7 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      home: Provider(
+          create: (BuildContext context) {
+            Repository repository = Repository();
+            return HomeBloc(repository);
+          },
+          child: HomeScreen()),
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 
 import '../../constants.dart';
 
 class GenreCard extends StatelessWidget {
-  final String genre;
+  final Genre genre;
 
   const GenreCard({Key key, this.genre}) : super(key: key);
 
@@ -19,7 +20,7 @@ class GenreCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onPressed: () {},
         child: Text(
-          genre,
+          genre.name,
           style: TextStyle(color: kTextColor.withOpacity(0.8), fontSize: 16),
         ),
       ),

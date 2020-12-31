@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/data/remote/api_movie.dart';
-import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
+import 'package:flutter_sample/ui/home/home_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_sample/ui/home/widgets/category_list_widget.dart';
 import 'package:flutter_sample/ui/home/widgets/genre_list_widget.dart';
-import 'package:flutter_sample/ui/home/widgets/movie_list_widget.dart';
 import 'package:flutter_sample/ui/home/widgets/movie_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../constants.dart';
+import 'widgets/movie_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,13 +16,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ApiMovie _apiMovie = ApiMovie();
-  Future<MovieListResponse> movies;
+  HomeBloc _homeBloc;
 
   @override
   void initState() {
-    movies = _apiMovie.getPlayingMovies();
+    _homeBloc = context.read<HomeBloc>();
+    _homeBloc.getDiscoverMovies(1);
+    _homeBloc.getGenreList();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _homeBloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,53 +37,28 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: _buildAppBar(),
         backgroundColor: bgColor,
-        body: FutureBuilder<MovieListResponse>(
-            future: movies,
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<MovieListResponse> snapshot,
-            ) {
-              if (snapshot.hasData) {
-                List<Movie> movies = snapshot.data.results;
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CategoryListWidget(),
-                      MovieListSlider(
-                        movies: movies,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      GenreListWidget(
-                        genres: [
-                          "Wtf",
-                          "Wtf this shit",
-                          "Some genere there",
-                          "Oh noo!!",
-                          "Wtf",
-                          "Wtf this shit",
-                          "Some genere there",
-                          "Oh noo!!",
-                          "Wtf",
-                          "Wtf this shit",
-                          "Some genere there",
-                          "Oh noo!!"
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      MovieListWidget(
-                        movies: movies,
-                      )
-                    ],
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            }));
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              CategoryListWidget(
+                onCategoryChange: (category) =>
+                    _homeBloc.changeCategory(category),
+              ),
+              MovieListSlider(),
+              SizedBox(
+                height: 8,
+              ),
+              GenreListWidget(),
+              SizedBox(
+                height: 8,
+              ),
+              MovieListWidget(),
+              SizedBox(
+                height: 16,
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _buildAppBar() {

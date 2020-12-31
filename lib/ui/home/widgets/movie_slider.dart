@@ -3,41 +3,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/ui/common/background_black_gradient.dart';
+import 'package:flutter_sample/ui/common/error.dart';
 import 'package:flutter_sample/ui/common/image_loader.dart';
+import 'package:flutter_sample/ui/common/loading.dart';
 import 'package:flutter_sample/ui/common/view_all_button.dart';
+import 'package:flutter_sample/ui/home/home_bloc.dart';
+import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MovieListSlider extends StatefulWidget {
-  final List<Movie> movies;
-
-  const MovieListSlider({Key key, this.movies}) : super(key: key);
-
   @override
-  _MovieListSliderState createState() => _MovieListSliderState(movies);
+  _MovieListSliderState createState() => _MovieListSliderState();
 }
 
 class _MovieListSliderState extends State<MovieListSlider> {
-  final List<Movie> movies;
+  HomeBloc _homeBloc;
 
-  _MovieListSliderState(this.movies);
+  @override
+  void initState() {
+    _homeBloc = context.read<HomeBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (movies.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "No More Movies",
-            style: TextStyle(color: Colors.white),
-          )
-        ],
+    var maxWidth = MediaQuery.of(context).size.width;
+    return StreamBuilder<BaseState>(
+      stream: _homeBloc.moviesByCategory,
+      builder: (BuildContext context, AsyncSnapshot<BaseState> snapshot) {
+        if (snapshot.hasData) {
+          BaseState state = snapshot.data;
+          return _handleStreamState(maxWidth, state);
+        } else {
+          return ErrorLoading(
+            message: "Fetch data not handle..",
+            height: maxWidth + 50,
+          );
+        }
+      },
+    );
+  }
+
+  Widget _handleStreamState(double width, BaseState state) {
+    if (state is StateLoading) {
+      return LoadingProgress(
+        height: width + 50,
       );
-    } else {
-      var width = MediaQuery.of(context).size.width;
+    } else if (state is StateLoaded<List<Movie>>) {
+      List<Movie> movies = state.value;
       return Container(
-        padding: EdgeInsets.only(top: 8),
         child: Column(children: [
           ViewAllButton(
             label: "View All",
@@ -67,6 +82,16 @@ class _MovieListSliderState extends State<MovieListSlider> {
             items: movies.map((e) => _buildItemSlider(e)).toList(),
           ),
         ]),
+      );
+    } else if (state is StateError) {
+      return ErrorLoading(
+        message: state.msgError,
+        height: width + 50,
+      );
+    } else {
+      return ErrorLoading(
+        message: "Unknown Error",
+        height: width + 50,
       );
     }
   }
