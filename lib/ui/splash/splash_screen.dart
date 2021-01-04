@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<SplashBloc>(
       bloc: locator<SplashBloc>(),
       child: _SplashWidget(),
     );

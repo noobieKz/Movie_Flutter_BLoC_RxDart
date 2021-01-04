@@ -1,8 +1,8 @@
 import 'package:flutter_sample/base/base_bloc.dart';
-import 'package:flutter_sample/data/repository.dart';
+import 'package:flutter_sample/data/irepository.dart';
 
 class MovieDetailBloc extends BaseBloc {
-  Repository _repository;
+  IRepository _repository;
 
   MovieDetailBloc(this._repository);
 

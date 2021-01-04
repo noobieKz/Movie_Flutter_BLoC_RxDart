@@ -1,13 +1,13 @@
 import 'package:flutter_sample/base/base_bloc.dart';
+import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
-import 'package:flutter_sample/data/repository.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ShowAllMovieBloc extends BaseBloc {
   static const FIRST_PAGE = 1;
-  Repository _repository;
+  IRepository _repository;
 
   BehaviorSubject<BaseState> _movieByCategorySubject =
       BehaviorSubject<BaseState>();

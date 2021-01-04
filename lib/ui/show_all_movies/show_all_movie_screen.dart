@@ -19,7 +19,7 @@ class ShowAllMovieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ShowAllMovieBloc>(
       bloc: locator<ShowAllMovieBloc>(),
       child: _ShowAllMovieWidget(
         category: category,
@@ -40,8 +40,6 @@ class _ShowAllMovieWidget extends StatefulWidget {
 class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
   ShowAllMovieBloc _bloc;
   ScrollController _controller;
-  double _crossAxisSpacing = 8, _mainAxisSpacing = 12, _aspectRatio = 2;
-  int _crossAxisCount = 2;
 
   @override
   void initState() {

@@ -16,7 +16,7 @@ import 'widgets/movie_list_widget.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HomeBloc>(
       bloc: locator<HomeBloc>(),
       child: _HomeWidget(),
     );

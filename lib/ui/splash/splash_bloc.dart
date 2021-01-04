@@ -16,7 +16,6 @@ class SplashBloc extends BaseBloc {
 
   @override
   void dispose() {
-    print("splash bloc dispose");
     _splashSubject.close();
   }
 }

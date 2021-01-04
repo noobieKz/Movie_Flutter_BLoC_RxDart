@@ -31,6 +31,7 @@ class _BlocProviderState<T extends BaseBloc> extends State<BlocProvider> {
   @override
   void dispose() {
     widget.bloc.dispose();
+    print("${widget.bloc.runtimeType} is dispose");
     super.dispose();
   }
 }

@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
+import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
-import 'package:flutter_sample/data/repository.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeBloc extends BaseBloc {
-  Repository _repository;
+  IRepository _repository;
   static const _FIRST_PAGE = 1;
 
   BehaviorSubject<Category> _categorySubject =
@@ -83,7 +82,6 @@ class HomeBloc extends BaseBloc {
 
   @override
   void dispose() {
-    print("home bloc dispose");
     _categorySubject.close();
     _movieByCategorySubject.close();
     _movieDiscoverSubject.close();
