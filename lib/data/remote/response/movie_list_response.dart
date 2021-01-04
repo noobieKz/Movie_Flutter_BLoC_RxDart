@@ -103,7 +103,7 @@ class Movie {
     backdropPath = json['backdrop_path'];
     title = json['title'];
     genreIds = json['genre_ids'].cast<int>();
-    popularity = json['popularity'];
+    popularity = json['popularity'] as double;
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     posterPath = json['poster_path'];

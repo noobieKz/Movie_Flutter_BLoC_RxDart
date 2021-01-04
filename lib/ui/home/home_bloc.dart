@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_sample/data/repository.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HomeBloc {
+class HomeBloc extends BaseBloc {
   Repository _repository;
   static const _FIRST_PAGE = 1;
 
@@ -29,7 +30,10 @@ class HomeBloc {
 
   Stream<BaseState> get genresListStream => _genresSubject.stream;
 
+  Category get currentCategory => _categorySubject.stream.value;
+
   HomeBloc(this._repository) {
+    print("new homebloc create");
     _listenCategoryChange();
   }
 
@@ -58,8 +62,7 @@ class HomeBloc {
     if (response.error.isEmpty)
       _movieDiscoverSubject.add(StateLoaded<List<Movie>>(response.results));
     else {
-      _movieDiscoverSubject
-          .add(StateError("Oops! Some error occurred ( ͡° ͜ʖ ͡°)"));
+      _movieDiscoverSubject.add(StateError(messageError));
     }
   }
 
@@ -70,7 +73,7 @@ class HomeBloc {
     if (response.error.isEmpty)
       _genresSubject.add(StateLoaded<List<Genre>>(response.genres));
     else {
-      _genresSubject.add(StateError("Oops! Some error occurred ( ͡° ͜ʖ ͡°)"));
+      _genresSubject.add(StateError(messageError));
     }
   }
 
@@ -78,7 +81,9 @@ class HomeBloc {
     _categorySubject.add(category);
   }
 
+  @override
   void dispose() {
+    print("home bloc dispose");
     _categorySubject.close();
     _movieByCategorySubject.close();
     _movieDiscoverSubject.close();

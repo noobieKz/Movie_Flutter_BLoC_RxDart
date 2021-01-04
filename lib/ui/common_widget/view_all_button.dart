@@ -4,15 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ViewAllButton extends StatelessWidget {
   final String label;
   final Widget icon;
+  final Function onClick;
 
-  const ViewAllButton({Key key, this.label, this.icon}) : super(key: key);
+  const ViewAllButton({Key key, this.label, this.icon, this.onClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Colors.black12,
       splashColor: Colors.blueGrey.withOpacity(0.4),
-      onTap: () {},
+      onTap: () {
+        onClick();
+      },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         alignment: Alignment.centerLeft,

@@ -6,7 +6,7 @@ class ErrorLoading extends StatelessWidget {
   final double width;
   final double height;
 
-  const ErrorLoading({Key key, this.message, this.width, this.height})
+  const ErrorLoading({Key key, this.message, this.width,@required this.height})
       : super(key: key);
 
   @override
@@ -24,7 +24,9 @@ class ErrorLoading extends StatelessWidget {
             color: Colors.white70,
             size: height / 3,
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Text(
             message,
             textAlign: TextAlign.center,

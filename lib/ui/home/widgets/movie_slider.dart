@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
-import 'package:flutter_sample/ui/common/background_black_gradient.dart';
-import 'package:flutter_sample/ui/common/error.dart';
-import 'package:flutter_sample/ui/common/image_loader.dart';
-import 'package:flutter_sample/ui/common/loading.dart';
-import 'package:flutter_sample/ui/common/view_all_button.dart';
+import 'package:flutter_sample/rounte_config/route_config.dart';
+import 'package:flutter_sample/ui/common_widget/background_black_gradient.dart';
+import 'package:flutter_sample/ui/common_widget/error.dart';
+import 'package:flutter_sample/ui/common_widget/image_loader.dart';
+import 'package:flutter_sample/ui/common_widget/loading.dart';
+import 'package:flutter_sample/ui/common_widget/view_all_button.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,6 +63,10 @@ class _MovieListSliderState extends State<MovieListSlider> {
               size: 20,
               color: Colors.white.withOpacity(0.8),
             ),
+            onClick: () {
+              Navigator.pushNamed(context, RouteConfig.ROUTE_SHOW_ALL,
+                  arguments: _homeBloc.currentCategory);
+            },
           ),
           SizedBox(
             height: 8,
@@ -79,7 +85,7 @@ class _MovieListSliderState extends State<MovieListSlider> {
               pauseAutoPlayOnTouch: true,
               enlargeCenterPage: true,
             ),
-            items: movies.map((e) => _buildItemSlider(e)).toList(),
+            items: movies.take(7).map((e) => _buildItemSlider(e)).toList(),
           ),
         ]),
       );
@@ -98,6 +104,8 @@ class _MovieListSliderState extends State<MovieListSlider> {
 
   Widget _buildItemSlider(Movie movie) {
     return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16), color: kColorChipItem),
       margin: EdgeInsets.only(left: 5, right: 5, bottom: 20),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

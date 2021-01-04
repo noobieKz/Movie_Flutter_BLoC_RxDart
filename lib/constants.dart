@@ -24,3 +24,5 @@ const listCategory = [
   Category(name: "Top Rated", keyQuery: "top_rated"),
   Category(name: "Coming Soon", keyQuery: "upcoming"),
 ];
+
+const messageError = "Oops! Some error occurred ( ͡° ͜ʖ ͡°)";
