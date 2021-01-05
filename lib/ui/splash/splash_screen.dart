@@ -52,7 +52,7 @@ class _SplashWidgetState extends State<_SplashWidget> {
             tag: "logo",
             child: Image.asset(
               'assets/images/movie_logo.png',
-              width: MediaQuery.of(context).size.width / 2,
+              width: MediaQuery.of(context).size.width / 3 * 2,
             ),
           ),
           SizedBox(

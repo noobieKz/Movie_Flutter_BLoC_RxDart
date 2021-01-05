@@ -7,5 +7,7 @@ abstract class IRepository {
 
   Future<MovieListResponse> getMovieDiscover(int page);
 
+  Future<MovieListResponse> getMovieByGenreId(int genreId, int page);
+
   Future<GenreListResponse> getGenreList();
 }

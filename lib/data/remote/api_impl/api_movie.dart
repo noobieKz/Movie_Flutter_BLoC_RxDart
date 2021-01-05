@@ -65,4 +65,22 @@ class ApiMovie implements IApiMovie {
       return GenreListResponse.error("$error");
     }
   }
+
+  @override
+  Future<MovieListResponse> getMovieByGenreId(int genreId, int page) async {
+    var params = {
+      "api_key": API_KEY,
+      "language": "en-US",
+      "page": page,
+      "with_genres": genreId
+    };
+    String url = '$BASE_URL/discover/movie';
+    try {
+      Response response = await _dio.get(url, queryParameters: params);
+      return MovieListResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return MovieListResponse.error("$error");
+    }
+  }
 }

@@ -3,35 +3,38 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/local/category.dart';
+import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/di/app_module.dart';
+import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'show_all_movie_bloc.dart';
 
 class ShowAllMovieScreen extends StatelessWidget {
-  final Category category;
+  final TypeShowAll typeShowAll;
 
-  const ShowAllMovieScreen({Key key, this.category}) : super(key: key);
+  const ShowAllMovieScreen({Key key, this.typeShowAll}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ShowAllMovieBloc>(
       bloc: locator<ShowAllMovieBloc>(),
       child: _ShowAllMovieWidget(
-        category: category,
+        typeShowAll: typeShowAll,
       ),
     );
   }
 }
 
 class _ShowAllMovieWidget extends StatefulWidget {
-  final Category category;
+  final TypeShowAll typeShowAll;
 
-  const _ShowAllMovieWidget({Key key, this.category}) : super(key: key);
+  const _ShowAllMovieWidget({Key key, this.typeShowAll}) : super(key: key);
 
   @override
   _ShowAllMovieWidgetState createState() => _ShowAllMovieWidgetState();
@@ -44,26 +47,62 @@ class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
   @override
   void initState() {
     _bloc = context.read<ShowAllMovieBloc>();
-    _bloc.getMovieByCategoryFirstPage(widget.category);
+    _bloc.getMovieByTypeShowFirstPage(widget.typeShowAll);
     _controller = ScrollController();
 
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        _bloc.requestMore(widget.category);
+        _bloc.requestMore(widget.typeShowAll);
       }
     });
     super.initState();
   }
 
+  String _getTitle() {
+    if (widget.typeShowAll.type == Type.CATEGORY) {
+      Category category = widget.typeShowAll.data;
+      return category.name;
+    } else if (widget.typeShowAll.type == Type.GENRE) {
+      Genre genre = widget.typeShowAll.data;
+      return genre.name;
+    } else if (widget.typeShowAll.type == Type.DISCOVER) {
+      return "Discover";
+    } else {
+      return "Wtf";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.category.name);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          icon: FaIcon(
+            FontAwesomeIcons.arrowLeft,
+            size: 20,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(
+            padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+            icon: FaIcon(
+              FontAwesomeIcons.exchangeAlt,
+              size: 20,
+              color: Colors.white,
+            ),
+            onPressed: () {
+            },
+          ),
+        ],
         title: Text(
-          widget.category.name,
+          _getTitle(),
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -93,24 +132,25 @@ class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
       );
     } else if (state is StateLoaded<List<Movie>>) {
       List<Movie> movies = state.value;
+      print("eeeeeeee" + movies.length.toString());
       return Container(
         alignment: Alignment.center,
-        child: ListView.builder(
+        child: GridView.builder(
           controller: _controller,
           padding: EdgeInsets.only(left: 10),
           physics: BouncingScrollPhysics(),
           itemCount: movies.length,
           itemBuilder: (context, index) {
-            if ((index == movies.length - 1) && _bloc.hasMoreData) {
-              return Center(
-                  child: SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: CircularProgressIndicator()));
+            if ((movies[index] == null) && _bloc.hasMoreData) {
+              return Container(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                    width: 30, height: 30, child: CircularProgressIndicator()),
+              );
             }
             return MovieItem(
               movie: movies[index],
-              width: MediaQuery.of(context).size.width / 4 * 3,
+              width: 150,
               height: 180,
               onItemClick: (item) {},
               isCenter: true,
@@ -118,6 +158,8 @@ class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
               ratingSize: 12,
             );
           },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, childAspectRatio: 3 / 5),
         ),
       );
     } else if (state is StateError) {

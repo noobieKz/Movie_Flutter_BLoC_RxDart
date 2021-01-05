@@ -41,7 +41,7 @@ class MovieItem extends StatelessWidget {
                     height: height,
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                      shape: BoxShape.rectangle,
+                        color: kColorChipItem,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -8,10 +8,10 @@ class MovieListResponse {
 
   MovieListResponse(
       {this.totalPages,
-        this.dates,
-        this.page,
-        this.totalResults,
-        this.results});
+      this.dates,
+      this.page,
+      this.totalResults,
+      this.results});
 
   MovieListResponse.error(this.error);
 
@@ -80,19 +80,21 @@ class Movie {
 
   Movie(
       {this.voteAverage,
-        this.id,
-        this.voteCount,
-        this.releaseDate,
-        this.adult,
-        this.backdropPath,
-        this.title,
-        // this.genreIds,
-        this.popularity,
-        this.originalLanguage,
-        this.originalTitle,
-        this.posterPath,
-        this.overview,
-        this.video});
+      this.id,
+      this.voteCount,
+      this.releaseDate,
+      this.adult,
+      this.backdropPath,
+      this.title,
+      // this.genreIds,
+      this.popularity,
+      this.originalLanguage,
+      this.originalTitle,
+      this.posterPath,
+      this.overview,
+      this.video});
+
+  Movie.wtf(this.id);
 
   Movie.fromJson(Map<String, dynamic> json) {
     voteAverage = json['vote_average'].toDouble();

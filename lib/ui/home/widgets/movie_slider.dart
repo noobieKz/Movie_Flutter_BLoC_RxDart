@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/constants.dart';
+import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
+import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/background_black_gradient.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/image_loader.dart';
@@ -57,7 +59,7 @@ class _MovieListSliderState extends State<MovieListSlider> {
       return Container(
         child: Column(children: [
           ViewAllButton(
-            label: "View All",
+            label: "View all",
             icon: FaIcon(
               FontAwesomeIcons.arrowRight,
               size: 20,
@@ -65,7 +67,8 @@ class _MovieListSliderState extends State<MovieListSlider> {
             ),
             onClick: () {
               Navigator.pushNamed(context, RouteConfig.ROUTE_SHOW_ALL,
-                  arguments: _homeBloc.currentCategory);
+                  arguments: TypeShowAll<Category>(
+                      Type.CATEGORY, _homeBloc.currentCategory));
             },
           ),
           SizedBox(

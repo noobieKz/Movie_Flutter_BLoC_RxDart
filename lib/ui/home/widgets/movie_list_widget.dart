@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
+import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
+import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +30,10 @@ class MovieListWidget extends StatelessWidget {
       InkWell(
         highlightColor: Colors.black12,
         splashColor: Colors.blueGrey.withOpacity(0.4),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, RouteConfig.ROUTE_SHOW_ALL,
+              arguments: TypeShowAll(Type.DISCOVER, null));
+        },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(children: [

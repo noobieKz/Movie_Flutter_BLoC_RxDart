@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
+import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'package:flutter_sample/ui/common_widget/genre_card.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:provider/provider.dart';
 
 class GenreListWidget extends StatelessWidget {
@@ -28,6 +30,10 @@ class GenreListWidget extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return GenreCard(
                   genre: state.value[index],
+                  onItemClick: (item) {
+                    Navigator.pushNamed(context, RouteConfig.ROUTE_SHOW_ALL,
+                        arguments: TypeShowAll(Type.GENRE, item));
+                  },
                 );
               },
             ),

@@ -25,7 +25,7 @@ class RouteConfig {
         break;
       case ROUTE_SHOW_ALL:
         result = MaterialPageRoute(
-            builder: (_) => ShowAllMovieScreen(category: args));
+            builder: (_) => ShowAllMovieScreen(typeShowAll: args));
         break;
       case ROUTE_MOVIE_DETAIL:
         result =

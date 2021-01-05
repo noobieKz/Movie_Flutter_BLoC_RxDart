@@ -5,8 +5,9 @@ import '../../constants.dart';
 
 class GenreCard extends StatelessWidget {
   final Genre genre;
+  final Function(Genre) onItemClick;
 
-  const GenreCard({Key key, this.genre}) : super(key: key);
+  const GenreCard({Key key, this.genre, this.onItemClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,9 @@ class GenreCard extends StatelessWidget {
         splashColor: kColorItemDarker,
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        onPressed: () {},
+        onPressed: () {
+          onItemClick(genre);
+        },
         child: Text(
           genre.name,
           style: TextStyle(color: kTextColor.withOpacity(0.8), fontSize: 16),

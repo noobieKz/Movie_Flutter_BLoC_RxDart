@@ -8,4 +8,7 @@ abstract class IApiMovie {
   Future<MovieListResponse> getDiscoverMovie(int page);
 
   Future<GenreListResponse> getGenresList();
+
+  Future<MovieListResponse> getMovieByGenreId(int genreId, int page);
+
 }

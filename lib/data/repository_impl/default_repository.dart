@@ -25,4 +25,9 @@ class DefaultRepository implements IRepository {
   Future<GenreListResponse> getGenreList() async {
     return _apiMovie.getGenresList();
   }
+
+  @override
+  Future<MovieListResponse> getMovieByGenreId(int genreId, int page) {
+    return _apiMovie.getMovieByGenreId(genreId, page);
+  }
 }
