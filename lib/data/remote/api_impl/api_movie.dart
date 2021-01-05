@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
+import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 
 import '../response/genre_list_response.dart';
 import '../response/movie_list_response.dart';
@@ -81,6 +82,24 @@ class ApiMovie implements IApiMovie {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return MovieListResponse.error("$error");
+    }
+  }
+
+  @override
+  Future<MovieDetailResponse> getMovieDetail(int movieId) async {
+    var params = {
+      'api_key': API_KEY,
+    };
+    try {
+      String url = '$BASE_URL/movie/$movieId';
+      Response response = await _dio.get(url, queryParameters: params);
+      MovieDetailResponse movieDetailResponse =
+          MovieDetailResponse.fromJson(response.data);
+      print("success");
+      return movieDetailResponse;
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return MovieDetailResponse.error(error.toString());
     }
   }
 }

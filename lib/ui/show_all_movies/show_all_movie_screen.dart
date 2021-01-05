@@ -6,6 +6,7 @@ import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/di/app_module.dart';
+import 'package:flutter_sample/utils.dart';
 import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
@@ -97,8 +98,7 @@ class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
               size: 20,
               color: Colors.white,
             ),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
         ],
         title: Text(
@@ -152,7 +152,9 @@ class _ShowAllMovieWidgetState extends State<_ShowAllMovieWidget> {
               movie: movies[index],
               width: 150,
               height: 180,
-              onItemClick: (item) {},
+              onItemClick: (item) {
+                goDetailScreen(context, item.id);
+              },
               isCenter: true,
               titleSize: 16,
               ratingSize: 12,

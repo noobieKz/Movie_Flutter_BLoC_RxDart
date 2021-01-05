@@ -1,6 +1,7 @@
 import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 
 import '../remote/iapi_movie.dart';
@@ -29,5 +30,10 @@ class DefaultRepository implements IRepository {
   @override
   Future<MovieListResponse> getMovieByGenreId(int genreId, int page) {
     return _apiMovie.getMovieByGenreId(genreId, page);
+  }
+
+  @override
+  Future<MovieDetailResponse> getMovieDetail(int movieId) {
+    return _apiMovie.getMovieDetail(movieId);
   }
 }

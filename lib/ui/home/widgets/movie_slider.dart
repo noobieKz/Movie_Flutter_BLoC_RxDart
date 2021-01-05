@@ -5,6 +5,7 @@ import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
+import 'package:flutter_sample/utils.dart';
 import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/background_black_gradient.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
@@ -106,83 +107,89 @@ class _MovieListSliderState extends State<MovieListSlider> {
   }
 
   Widget _buildItemSlider(Movie movie) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16), color: kColorChipItem),
-      margin: EdgeInsets.only(left: 5, right: 5, bottom: 20),
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Stack(
-                children: [
-                  ImageLoader(
-                    width: constraints.biggest.width,
-                    height: constraints.biggest.height,
-                    imageUrl:
-                        'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: BackgroundBlackGradient(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            movie.title,
-                            style:
-                                Theme.of(context).textTheme.headline6.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                    ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                movie.voteAverage.roundToDouble().toString(),
-                                style: TextStyle(
-                                    color: Colors.white.withOpacity(0.9),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              RatingBar.builder(
-                                  unratedColor: Colors.white54,
-                                  itemSize: 16.0,
-                                  initialRating: movie.voteAverage / 2,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 2.0),
-                                  itemBuilder: (context, _) => Icon(
-                                        Icons.star,
-                                        color: Colors.yellow[600],
-                                      ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  }),
-                            ],
-                          )
-                        ],
-                      ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: () => goDetailScreen(context, movie.id),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16), color: kColorChipItem),
+        margin: EdgeInsets.only(left: 5, right: 5, bottom: 20),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Stack(
+                  children: [
+                    ImageLoader(
+                      width: constraints.biggest.width,
+                      height: constraints.biggest.height,
+                      imageUrl:
+                          'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
                     ),
-                  )
-                ],
-              ));
-        },
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: BackgroundBlackGradient(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              movie.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  movie.voteAverage.roundToDouble().toString(),
+                                  style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                RatingBar.builder(
+                                    unratedColor: Colors.white54,
+                                    itemSize: 16.0,
+                                    initialRating: movie.voteAverage / 2,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                        EdgeInsets.symmetric(horizontal: 2.0),
+                                    itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.yellow[600],
+                                        ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    }),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ));
+          },
+        ),
       ),
     );
   }

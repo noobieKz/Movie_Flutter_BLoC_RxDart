@@ -20,4 +20,5 @@ void setupLocator() {
   locator.registerFactory<HomeBloc>(() => HomeBloc(locator<IRepository>()));
   locator.registerFactory(() => MovieDetailBloc(locator<IRepository>()));
   locator.registerFactory(() => ShowAllMovieBloc(locator<IRepository>()));
+
 }

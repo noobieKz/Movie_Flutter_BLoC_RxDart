@@ -1,6 +1,7 @@
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 
 class MockApi implements IApiMovie {
@@ -25,6 +26,12 @@ class MockApi implements IApiMovie {
   @override
   Future<MovieListResponse> getMovieByGenreId(int genreId, int page) {
     // TODO: implement getMovieByGenreId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<MovieDetailResponse> getMovieDetail(int movieId) {
+    // TODO: implement getMovieDetail
     throw UnimplementedError();
   }
 }
