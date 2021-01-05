@@ -8,6 +8,8 @@ import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_bloc.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/backdrop_rating.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/genre_list.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/title_and_info.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -81,7 +83,10 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
             BackdropRating(
               size: MediaQuery.of(context).size,
               movie: movie,
-            )
+            ),
+            SizedBox(height: kDefaultPadding / 2),
+            TitleAndInfo(movie: movie),
+            GenreList(movie: movie),
           ],
         ),
       );

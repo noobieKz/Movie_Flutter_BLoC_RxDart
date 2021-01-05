@@ -4,7 +4,7 @@ import 'package:flutter_sample/data/local/category.dart';
 // Colos that use in our app
 const kSecondaryColor = Color(0xFFf48210);
 const kTextColor = Colors.white;
-const kTextLightColor = Color(0xFF9A9BB2);
+const kTextLightColor = Colors.white70;
 const kFillStarColor = Color(0xFFFCC419);
 const Color kColorChipItem = const Color(0xFF192431);
 const Color kColorItemDarker = const Color(0xFF002431);

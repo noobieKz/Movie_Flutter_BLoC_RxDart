@@ -6,13 +6,15 @@ import '../../constants.dart';
 class GenreCard extends StatelessWidget {
   final Genre genre;
   final Function(Genre) onItemClick;
+  final double space;
 
-  const GenreCard({Key key, this.genre, this.onItemClick}) : super(key: key);
+  const GenreCard({Key key, this.genre, this.onItemClick, this.space = 8})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: space),
       decoration: BoxDecoration(
           color: kColorChipItem, borderRadius: BorderRadius.circular(20)),
       child: FlatButton(

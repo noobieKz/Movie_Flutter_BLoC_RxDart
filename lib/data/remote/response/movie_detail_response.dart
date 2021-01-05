@@ -1,8 +1,10 @@
+import 'genre_list_response.dart';
+
 class MovieDetailResponse {
   bool adult;
   String backdropPath;
   int budget;
-  List<Genres> genres;
+  List<Genre> genres;
   String homepage;
   int id;
   String imdbId;
@@ -54,9 +56,9 @@ class MovieDetailResponse {
     backdropPath = json['backdrop_path'];
     budget = json['budget'];
     if (json['genres'] != null) {
-      genres = new List<Genres>();
+      genres = new List<Genre>();
       json['genres'].forEach((v) {
-        genres.add(new Genres.fromJson(v));
+        genres.add(new Genre.fromJson(v));
       });
     }
     homepage = json['homepage'];
@@ -113,25 +115,6 @@ class MovieDetailResponse {
     data['video'] = this.video;
     data['vote_average'] = this.voteAverage;
     data['vote_count'] = this.voteCount;
-    return data;
-  }
-}
-
-class Genres {
-  int id;
-  String name;
-
-  Genres({this.id, this.name});
-
-  Genres.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
     return data;
   }
 }
