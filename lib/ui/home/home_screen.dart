@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/di/app_module.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
+import 'package:flutter_sample/ui/search/movie_search_delegate.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_sample/ui/home/widgets/category_list_widget.dart';
@@ -108,7 +109,12 @@ class _HomeWidgetState extends State<_HomeWidget> {
           iconSize: 20,
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           icon: FaIcon(FontAwesomeIcons.search),
-          onPressed: () {},
+          onPressed: () {
+            showSearch(
+                context: context,
+                delegate: MovieSearchDelegate(),
+                query: "");
+          },
         ),
       ],
     );

@@ -20,7 +20,7 @@ class RouteConfig {
       case ROUTE_HOME:
         result = PageRouteBuilder(
           pageBuilder: (_, __, ___) => HomeScreen(),
-          transitionDuration: Duration(milliseconds: 600),
+          transitionDuration: Duration(milliseconds: 400),
         );
         break;
       case ROUTE_SHOW_ALL:

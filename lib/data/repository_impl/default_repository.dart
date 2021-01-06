@@ -1,7 +1,9 @@
 import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/local/category.dart';
+import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 
 import '../remote/iapi_movie.dart';
@@ -35,5 +37,20 @@ class DefaultRepository implements IRepository {
   @override
   Future<MovieDetailResponse> getMovieDetail(int movieId) {
     return _apiMovie.getMovieDetail(movieId);
+  }
+
+  @override
+  Future<MovieGalleryResponse> getMovieGallery(int movieId) {
+    return _apiMovie.getMovieGallery(movieId);
+  }
+
+  @override
+  Future<CastCrewResponse> getCastCrewMovie(int movieId) {
+    return _apiMovie.getCastCrewMovie(movieId);
+  }
+
+  @override
+  Future<MovieListResponse> searchMovies(String query) {
+    return _apiMovie.searchMovies(query);
   }
 }

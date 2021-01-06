@@ -1,3 +1,6 @@
+import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
+
 import 'local/category.dart';
 import 'remote/response/genre_list_response.dart';
 import 'remote/response/movie_detail_response.dart';
@@ -13,4 +16,10 @@ abstract class IRepository {
   Future<GenreListResponse> getGenreList();
 
   Future<MovieDetailResponse> getMovieDetail(int movieId);
+
+  Future<MovieGalleryResponse> getMovieGallery(int movieId);
+
+  Future<CastCrewResponse> getCastCrewMovie(int movieId);
+
+  Future<MovieListResponse> searchMovies(String query);
 }

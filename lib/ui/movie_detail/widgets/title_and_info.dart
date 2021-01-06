@@ -35,7 +35,7 @@ class TitleAndInfo extends StatelessWidget {
                     SizedBox(width: kDefaultPadding),
                     SizedBox(width: kDefaultPadding),
                     Text(
-                      "2h 32min",
+                      _getTime(),
                       style: TextStyle(color: kTextLightColor),
                     ),
                   ],
@@ -61,5 +61,11 @@ class TitleAndInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getTime() {
+    int hour = movie.runtime ~/ 60;
+    int minute = movie.runtime - hour * 60;
+    return "${hour}h ${minute}min";
   }
 }

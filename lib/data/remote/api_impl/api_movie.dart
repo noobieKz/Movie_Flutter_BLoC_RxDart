@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
+import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/movie_gallery.dart';
 
 import '../response/genre_list_response.dart';
 import '../response/movie_list_response.dart';
@@ -100,6 +103,61 @@ class ApiMovie implements IApiMovie {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return MovieDetailResponse.error(error.toString());
+    }
+  }
+
+  @override
+  Future<MovieGalleryResponse> getMovieGallery(int movieId) async {
+    var params = {
+      'api_key': API_KEY,
+    };
+    try {
+      String url = "$BASE_URL/movie/$movieId/images";
+      final response = await _dio.get(url, queryParameters: params);
+      if (response.statusCode == 200) {
+        return MovieGalleryResponse.fromJson(response.data);
+      } else {
+        return MovieGalleryResponse.error(response.statusMessage);
+      }
+    } catch (e) {
+      return MovieGalleryResponse.error(e.toString());
+      print(e.toString());
+    }
+  }
+
+  @override
+  Future<CastCrewResponse> getCastCrewMovie(int movieId) async {
+    var params = {
+      'api_key': API_KEY,
+    };
+    try {
+      String url = "$BASE_URL/movie/$movieId/credits";
+      final response = await _dio.get(url, queryParameters: params);
+      if (response.statusCode == 200) {
+        return CastCrewResponse.fromJson(response.data);
+      } else {
+        return CastCrewResponse.error(response.statusMessage);
+      }
+    } catch (e) {
+      return CastCrewResponse.error(e.toString());
+      print(e.toString());
+    }
+  }
+
+  @override
+  Future<MovieListResponse> searchMovies(String query) async {
+    var params = {
+      'api_key': API_KEY,
+      "query": query,
+    };
+    try {
+      String url = "$BASE_URL/search/movie";
+      final response = await _dio.get(url, queryParameters: params);
+      print("$url - $query");
+      return MovieListResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return MovieListResponse.error("$error");
     }
   }
 }

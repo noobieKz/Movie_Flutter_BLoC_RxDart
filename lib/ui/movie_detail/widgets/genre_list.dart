@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'package:flutter_sample/ui/common_widget/genre_card.dart';
@@ -20,8 +21,9 @@ class GenreList extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           vertical: kDefaultPadding / 2, horizontal: kDefaultPadding / 2),
       child: Wrap(
-        runSpacing: 12,
+        runSpacing: 8,
         children: movie.genres
+            .map((e) => Genre(name: e.name, id: e.id))
             .map((e) => GenreCard(
                   genre: e,
                   space: 4,

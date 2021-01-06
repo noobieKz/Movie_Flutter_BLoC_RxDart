@@ -6,9 +6,13 @@ import 'package:flutter_sample/di/app_module.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/ui/home/widgets/person_list_widget.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_bloc.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/backdrop_rating.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/cast_and_crew.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/description_movie.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/genre_list.dart';
+import 'package:flutter_sample/ui/movie_detail/widgets/movie_gallery.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/title_and_info.dart';
 import 'package:provider/provider.dart';
 
@@ -44,11 +48,15 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
   void initState() {
     _bloc = context.read<MovieDetailBloc>();
     _bloc.getMovieDetail(widget.movieId);
+    _bloc.getMovieGallery(widget.movieId);
+    _bloc.getCastAndCrew(widget.movieId);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("main detail rebuild");
     return Scaffold(
       backgroundColor: bgColor,
       body: StreamBuilder<BaseState>(
@@ -87,6 +95,13 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
             SizedBox(height: kDefaultPadding / 2),
             TitleAndInfo(movie: movie),
             GenreList(movie: movie),
+            DescriptionMovie(movie: movie),
+            SizedBox(height: kDefaultPadding / 2),
+            MovieGallery(),
+            CastAndCrew(),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ),
       );
