@@ -7,29 +7,28 @@ import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/ui/search/search_result_widget.dart';
+import 'package:flutter_sample/ui/search/search_suggestion_widget.dart';
 import 'package:provider/provider.dart';
 import '../../utils.dart';
 import 'search_bloc.dart';
 
+enum _SearchBody { SUGGESTIONS, RESULT }
+
 class SearchScreen extends StatelessWidget {
-  final String query;
-
-  const SearchScreen({Key key, this.query}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    print("searchScreen build " + query);
     return BlocProvider(
       bloc: locator<SearchBloc>(),
-      child: SearchWidget(query: query,),
+      child: SearchWidget(),
     );
   }
 }
 
 class SearchWidget extends StatefulWidget {
-  final String query;
-
-  const SearchWidget({Key key, this.query}) : super(key: key);
+  const SearchWidget({
+    Key key,
+  }) : super(key: key);
 
   @override
   _SearchWidgetState createState() => _SearchWidgetState();
@@ -37,93 +36,113 @@ class SearchWidget extends StatefulWidget {
 
 class _SearchWidgetState extends State<SearchWidget> {
   SearchBloc _bloc;
-  ScrollController _controller;
+  TextEditingController _textEditingController;
+  FocusNode _focusNode;
+
+  _SearchBody get _currentBody => _currentBodyNotifier.value;
+
+  set _currentBody(_SearchBody value) {
+    _currentBodyNotifier.value = value;
+  }
+
+  final ValueNotifier<_SearchBody> _currentBodyNotifier =
+      ValueNotifier<_SearchBody>(_SearchBody.SUGGESTIONS);
 
   @override
   void initState() {
-    _controller = ScrollController();
     _bloc = context.read<SearchBloc>();
-    print(widget.query);
-    _bloc.search(widget.query);
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        // _bloc.requestMore(widget.typeShowAll);
-      }
-    });
+    _focusNode = FocusNode();
+    _textEditingController = TextEditingController();
+    _currentBodyNotifier.addListener(_rebuild);
+    _textEditingController.addListener(_rebuild);
+    _bloc = context.read<SearchBloc>();
+    _focusNode.addListener(_onFocusChange);
     super.initState();
+  }
+
+  void _rebuild() {
+    setState(() {});
+  }
+
+  void _onFocusChange() {
+    if (_focusNode.hasFocus && _currentBody != _SearchBody.SUGGESTIONS) {
+      showSuggestions();
+    }
+  }
+
+  void _showEmptyIfClear() {
+    print("clear ");
+    _textEditingController.text = "";
+    if (!_focusNode.hasFocus && _currentBody != _SearchBody.SUGGESTIONS) {
+      _bloc.search("");
+    }
+  }
+
+  void showResults(String query, bool selectFromSuggestion) {
+    if (selectFromSuggestion) _textEditingController.text = query;
+    _focusNode.unfocus();
+    _currentBody = _SearchBody.RESULT;
+    _bloc.search(query);
+  }
+
+  void showSuggestions() {
+    _focusNode.requestFocus();
+    _currentBody = _SearchBody.SUGGESTIONS;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: bgColor,
-      child: StreamBuilder<BaseState>(
-        stream: _bloc.movieResults,
-        builder: (BuildContext context, AsyncSnapshot<BaseState> snapshot) {
-          if (snapshot.hasData) {
-            BaseState state = snapshot.data;
-            return _handleStreamState(state, context);
-          } else {
-            return ErrorLoading(
-              message: "Fetch data not handle..",
-              height: MediaQuery.of(context).size.height,
-            );
-          }
-        },
+    print("search build");
+    Widget body;
+    print(_currentBody == _SearchBody.SUGGESTIONS);
+    String suggestionQuery = _textEditingController.text;
+    switch (_currentBody) {
+      case _SearchBody.SUGGESTIONS:
+        body = SearchSuggestionWidget(
+          query: suggestionQuery,
+          onSuggestionSelected: (query) {
+            showResults(query, true);
+          },
+        );
+        break;
+      case _SearchBody.RESULT:
+        body = SearchResultWidget(
+          onLoadMore: () => _bloc.searchNextPage(),
+        );
+        break;
+    }
+    return Scaffold(
+      backgroundColor: bgColor,
+      appBar: AppBar(
+        elevation: 2,
+        backgroundColor: bgColor,
+        title: TextField(
+          style: TextStyle(color: Colors.white),
+          onSubmitted: (newValue) {
+            showResults(newValue, false);
+          },
+          focusNode: _focusNode,
+          controller: _textEditingController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: "Search here...",
+            hintStyle: TextStyle(color: Colors.white70),
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _showEmptyIfClear();
+            },
+            color: Colors.white,
+          ),
+        ],
+      ),
+      body: AnimatedSwitcher(
+        duration: Duration(microseconds: 300),
+        child: body,
       ),
     );
-  }
-
-  Widget _handleStreamState(BaseState state, context) {
-    double maxHeight = MediaQuery.of(context).size.height;
-    if (state is StateLoading) {
-      return LoadingProgress(
-        height: maxHeight,
-      );
-    } else if (state is StateLoaded<List<Movie>>) {
-      List<Movie> movies = state.value;
-      print("eeeeeeee" + movies.length.toString());
-      return Container(
-        alignment: Alignment.center,
-        child: GridView.builder(
-          controller: _controller,
-          padding: EdgeInsets.only(left: 10),
-          physics: BouncingScrollPhysics(),
-          itemCount: movies.length,
-          itemBuilder: (context, index) {
-            // if ((movies[index] == null) && _bloc.hasMoreData) {
-            //   return Container(
-            //     alignment: Alignment.topCenter,
-            //     child: SizedBox(
-            //         width: 30, height: 30, child: CircularProgressIndicator()),
-            //   );
-            // }
-            return MovieItem(
-              movie: movies[index],
-              width: 150,
-              height: 180,
-              onItemClick: (item) {
-                goDetailScreen(context, item.id);
-              },
-              isCenter: true,
-              titleSize: 16,
-              ratingSize: 12,
-            );
-          },
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 3 / 5),
-        ),
-      );
-    } else if (state is StateError) {
-      return ErrorLoading(
-        message: state.msgError,
-        height: maxHeight,
-      );
-    } else {
-      return ErrorLoading(
-        message: "Unknown Error",
-        height: maxHeight,
-      );
-    }
   }
 }

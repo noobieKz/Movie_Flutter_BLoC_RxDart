@@ -145,10 +145,11 @@ class ApiMovie implements IApiMovie {
   }
 
   @override
-  Future<MovieListResponse> searchMovies(String query) async {
+  Future<MovieListResponse> searchMovies(String query, int page) async {
     var params = {
       'api_key': API_KEY,
       "query": query,
+      "page": page
     };
     try {
       String url = "$BASE_URL/search/movie";

@@ -50,7 +50,7 @@ class DefaultRepository implements IRepository {
   }
 
   @override
-  Future<MovieListResponse> searchMovies(String query) {
-    return _apiMovie.searchMovies(query);
+  Future<MovieListResponse> searchMovies(String query, int page) {
+    return _apiMovie.searchMovies(query, page);
   }
 }

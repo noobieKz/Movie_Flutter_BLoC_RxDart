@@ -21,6 +21,6 @@ abstract class IApiMovie {
 
   Future<CastCrewResponse> getCastCrewMovie(int movieId);
 
-  Future<MovieListResponse> searchMovies(String query);
+  Future<MovieListResponse> searchMovies(String query, int page);
 
 }

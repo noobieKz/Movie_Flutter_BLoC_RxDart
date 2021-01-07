@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/ui/home/home_screen.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_screen.dart';
+import 'package:flutter_sample/ui/search/search_screen.dart';
 import 'package:flutter_sample/ui/show_all_movies/show_all_movie_screen.dart';
 import 'package:flutter_sample/ui/splash/splash_screen.dart';
 
@@ -9,6 +10,7 @@ class RouteConfig {
   static const ROUTE_HOME = "/home";
   static const ROUTE_SHOW_ALL = "/show_all";
   static const ROUTE_MOVIE_DETAIL = "/movie_detail";
+  static const ROUTE_SEARCH = "/search";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -30,6 +32,9 @@ class RouteConfig {
       case ROUTE_MOVIE_DETAIL:
         result =
             MaterialPageRoute(builder: (_) => MovieDetailScreen(movieId: args));
+        break;
+      case ROUTE_SEARCH:
+        result = MaterialPageRoute(builder: (_) => SearchScreen());
         break;
     }
     return result;

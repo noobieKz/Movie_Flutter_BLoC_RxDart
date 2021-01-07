@@ -17,20 +17,31 @@ class BackdropRating extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: size.height * 0.5,
+      width: size.width,
       child: Stack(
         children: [
           Container(
             height: size.height * 0.5 - 50,
             decoration: BoxDecoration(
+              color: kColorChipItem.withOpacity(0.7),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
-              child: ImageLoader(
-                imageUrl: (movie.backdropPath == null)
-                    ? "https://image.tmdb.org/t/p/w780${movie.posterPath}"
-                    : "https://image.tmdb.org/t/p/w780${movie.backdropPath}",
-              ),
+              child: (movie.backdropPath == null)
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.image_search,
+                        size: 100,
+                        color: Colors.white70,
+                      ),
+                    )
+                  : ImageLoader(
+                      width: size.width,
+                      imageUrl:
+                          "https://image.tmdb.org/t/p/w780${movie.backdropPath}",
+                    ),
             ),
           ),
           //Rating bar

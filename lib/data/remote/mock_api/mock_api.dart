@@ -50,7 +50,7 @@ class MockApi implements IApiMovie {
   }
 
   @override
-  Future<MovieListResponse> searchMovies(String query) {
+  Future<MovieListResponse> searchMovies(String query, int page) {
     // TODO: implement searchMovies
     throw UnimplementedError();
   }
