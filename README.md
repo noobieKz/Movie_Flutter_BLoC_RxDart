@@ -1,16 +1,17 @@
-# flutter_sample
+# Movie_Flutter
 
-A new Flutter application.
+ - A sample Flutter application with main purpose is learning.
 
-## Getting Started
+ - It just is a simple project for beginner learns Flutter (as me), focus on Bloc pattern, RxDart, Clean code...to architect a flutter project A Flutter project for learning.
+ -  It just has a few features and still in progress ...
 
-This project is a starting point for a Flutter application.
+## Tech Stacks
+ - State Managerment: BLoC pattern - RxDart
+ - Dependency Injection: GetIt + Provider
+ - Data Local: SharePreferences
+ - Getting API: Dio
+ 
+ ### Screenshort
 
-A few resources to get you started if this is your first Flutter project:
+![image1](https://user-images.githubusercontent.com/30549963/104031448-51740380-51ff-11eb-80f6-cd12a7c9bd45.gif)                 ![image2](https://user-images.githubusercontent.com/30549963/104031464-55a02100-51ff-11eb-8ac9-8a7800e601a0.gif)                    ![image3](https://user-images.githubusercontent.com/30549963/104031470-58027b00-51ff-11eb-802d-b9e51cdd89c3.gif)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
