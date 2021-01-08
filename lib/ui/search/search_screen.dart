@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
-import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/di/app_module.dart';
-import 'package:flutter_sample/ui/common_widget/error.dart';
-import 'package:flutter_sample/ui/common_widget/loading.dart';
-import 'package:flutter_sample/ui/common_widget/movie_item.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:flutter_sample/ui/search/search_result_widget.dart';
 import 'package:flutter_sample/ui/search/search_suggestion_widget.dart';
 import 'package:provider/provider.dart';
-import '../../utils/utils.dart';
 import 'search_bloc.dart';
 
 enum _SearchBody { SUGGESTIONS, RESULT }
@@ -71,7 +65,6 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   void _showEmptyIfClear() {
-    print("clear ");
     _textEditingController.text = "";
     if (!_focusNode.hasFocus && _currentBody != _SearchBody.SUGGESTIONS) {
       _bloc.search("");

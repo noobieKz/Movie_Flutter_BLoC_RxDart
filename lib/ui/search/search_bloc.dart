@@ -35,10 +35,13 @@ class SearchBloc extends BaseBloc {
       BehaviorSubject.seeded(StateLoaded<List<Movie>>([]));
 
   //stream
+  //If use instant search, can add debounceTime like below
   Stream<BaseState> get movieResults =>
       _keyQuerySubject.stream.switchMap((value) {
         return (value.item2 == FIRST_PAGE)
-            ? _firstRequestState(value.item1)
+            ? BehaviorSubject.seeded(value)
+                .debounceTime(Duration(milliseconds: 0))    //change debounceTime
+                .switchMap((event) => _firstRequestState(value.item1))
             : _requestMoreState();
       });
 
