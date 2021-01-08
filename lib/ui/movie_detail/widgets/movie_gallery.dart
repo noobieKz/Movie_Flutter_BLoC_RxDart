@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
+import 'package:flutter_sample/ui/common_widget/empty_list_widget.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/image_loader.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
@@ -16,7 +17,6 @@ class MovieGallery extends StatefulWidget {
 class _MovieGalleryState extends State<MovieGallery> {
   @override
   Widget build(BuildContext context) {
-    print("detail bloc ${context.watch<MovieDetailBloc>() == null}");
     return StreamBuilder<BaseState>(
       stream: context.watch<MovieDetailBloc>().movieGalleryStream,
       builder: (BuildContext context, AsyncSnapshot<BaseState> snapshot) {
@@ -53,19 +53,26 @@ class _MovieGalleryState extends State<MovieGallery> {
                   .copyWith(color: Colors.white),
             ),
           ),
-          SizedBox(height: 8,),
-          Container(
-            height: 180,
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 6),
-              itemCount:
-                  images.backdrops.length > 10 ? 10 : images.backdrops.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  _buildItem(images.backdrops[index].filePath, 180),
-            ),
+          SizedBox(
+            height: 8,
           ),
+          (images.backdrops.isEmpty)
+              ? EmptyListWidget(
+                  height: 180,
+                )
+              : Container(
+                  height: 180,
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    itemCount: images.backdrops.length > 10
+                        ? 10
+                        : images.backdrops.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) =>
+                        _buildItem(images.backdrops[index].filePath, 180),
+                  ),
+                ),
         ],
       );
     } else if (state is StateError) {

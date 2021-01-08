@@ -3,6 +3,7 @@ import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/utils/exts.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 
@@ -22,6 +23,9 @@ class SearchBloc extends BaseBloc {
 
   //local logic
   BehaviorSubject<Tuple2<String, int>> _keyQuerySubject = BehaviorSubject();
+
+  BehaviorSubject<List<String>> _recentSearch = BehaviorSubject<List<String>>();
+
   bool hasMoreData = true;
   int _currentPageLoadMore = 2;
   List<Movie> _movieCached = [];
@@ -38,6 +42,8 @@ class SearchBloc extends BaseBloc {
             : _requestMoreState();
       });
 
+  Stream<List<String>> get recentSearch => _recentSearch.stream;
+
   Stream<bool> get loadMore => _loadMoreSubject.stream;
 
   void _onNewQuery() {
@@ -46,12 +52,26 @@ class SearchBloc extends BaseBloc {
     _currentPageLoadMore = 2;
   }
 
+  void getRecentSearch() {
+    loggerTag("SearchBloc", "getListRecent");
+    _recentSearch.add(_repository.getListRecentSearch());
+  }
+
   void search(String query) {
     if (_keyQuerySubject.value != null &&
         query != _keyQuerySubject.value.item1) {
       _onNewQuery();
     }
     _keyQuerySubject.add(Tuple2(query, FIRST_PAGE));
+    Future.delayed(Duration(milliseconds: 300))
+        .then((value) => _saveRecentSearch(query));
+  }
+
+  void _saveRecentSearch(String query) {
+    if (query.isNotEmpty && !_repository.getListRecentSearch().contains(query))
+      _repository.saveRecentSearch(query).then((value) {
+        _recentSearch.add(value);
+      });
   }
 
   void searchNextPage() {
@@ -113,5 +133,6 @@ class SearchBloc extends BaseBloc {
   void dispose() {
     _keyQuerySubject.close();
     _loadMoreSubject.close();
+    _recentSearch.close();
   }
 }

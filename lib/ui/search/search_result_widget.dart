@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
+import 'package:flutter_sample/ui/common_widget/empty_list_widget.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_sample/ui/home/home_state.dart';
 import 'package:flutter_sample/ui/search/search_bloc.dart';
 import 'package:provider/provider.dart';
 import '../../constants.dart';
-import '../../utils.dart';
+import '../../utils/utils.dart';
 
 class SearchResultWidget extends StatefulWidget {
   final Function onLoadMore;
@@ -63,25 +64,25 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
       );
     } else if (state is StateLoaded<List<Movie>>) {
       List<Movie> movies = state.value;
-      print("eeeeeeee" + movies.length.toString());
       if (movies.isEmpty) {
-        return Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.search_off_rounded,
-                size: 180 / 3,
-                color: Colors.white70,
-              ),
-              Text(
-                "Oops! No data here...",
-                style: TextStyle(color: Colors.white70),
-              ),
-            ],
-          ),
-        );
+        // return Container(
+        //   alignment: Alignment.center,
+        //   child: Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Icon(
+        //         Icons.search_off_rounded,
+        //         size: 180 / 3,
+        //         color: Colors.white70,
+        //       ),
+        //       Text(
+        //         "Oops! No data here...",
+        //         style: TextStyle(color: Colors.white70),
+        //       ),
+        //     ],
+        //   ),
+        // );
+        return EmptyListWidget();
       }
       return Container(
         alignment: Alignment.center,

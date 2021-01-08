@@ -5,7 +5,7 @@ import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
-import 'package:flutter_sample/utils.dart';
+import 'package:flutter_sample/utils/utils.dart';
 import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/background_black_gradient.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';

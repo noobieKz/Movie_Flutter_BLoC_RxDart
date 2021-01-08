@@ -22,4 +22,9 @@ abstract class IRepository {
   Future<CastCrewResponse> getCastCrewMovie(int movieId);
 
   Future<MovieListResponse> searchMovies(String query, int page);
+
+  List<String> getListRecentSearch();
+
+  Future<List<String>> saveRecentSearch(String query);
+
 }

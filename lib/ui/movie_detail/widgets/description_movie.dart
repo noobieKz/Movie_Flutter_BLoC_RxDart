@@ -84,7 +84,6 @@ class _DescriptionMovieState extends State<DescriptionMovie> {
   }
 
   void _expand() {
-    print("${'\n'.allMatches(movie.overview).length + 1}");
     setState(() {
       _isExpanded = !_isExpanded;
     });

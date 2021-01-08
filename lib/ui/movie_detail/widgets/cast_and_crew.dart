@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/ui/common_widget/cast_card.dart';
+import 'package:flutter_sample/ui/common_widget/empty_list_widget.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/home/home_state.dart';
@@ -53,16 +54,21 @@ class CastAndCrew extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 160,
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                scrollDirection: Axis.horizontal,
-                itemCount: casts.length,
-                itemBuilder: (context, index) => CastCard(cast: casts[index]),
-                physics: BouncingScrollPhysics(),
-              ),
-            )
+            (casts.isEmpty)
+                ? EmptyListWidget(
+                    height: 160,
+                  )
+                : SizedBox(
+                    height: 160,
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: casts.length,
+                      itemBuilder: (context, index) =>
+                          CastCard(cast: casts[index]),
+                      physics: BouncingScrollPhysics(),
+                    ),
+                  )
           ],
         ),
       );

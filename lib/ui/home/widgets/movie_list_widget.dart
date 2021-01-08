@@ -7,7 +7,7 @@ import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
-import 'package:flutter_sample/utils.dart';
+import 'package:flutter_sample/utils/utils.dart';
 import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

@@ -6,9 +6,9 @@ import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'ui/home/home_bloc.dart';
 import 'ui/home/home_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
+  await setupLocator();
   runApp(MyApp());
 }
 

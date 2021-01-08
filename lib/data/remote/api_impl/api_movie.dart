@@ -154,7 +154,6 @@ class ApiMovie implements IApiMovie {
     try {
       String url = "$BASE_URL/search/movie";
       final response = await _dio.get(url, queryParameters: params);
-      print("$url - $query");
       return MovieListResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
