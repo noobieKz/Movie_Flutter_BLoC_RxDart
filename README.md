@@ -6,10 +6,10 @@
  - It just has a few features and still in progress ...
 
 ## Tech Stacks
- - State Managerment: BLoC pattern - RxDart
- - Dependency Injection: GetIt + Provider
- - Data Local: SharePreferences
- - Getting API: Dio
+ - State Managerment: **BLoC pattern - RxDart**
+ - Dependency Injection: **GetIt + Provider**
+ - Data Local: **SharePreferences**
+ - Getting API: **Dio**
  
  ### Screenshort
  
