@@ -4,7 +4,7 @@ import 'package:flutter_sample/ui/common_widget/cast_card.dart';
 import 'package:flutter_sample/ui/common_widget/empty_list_widget.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';

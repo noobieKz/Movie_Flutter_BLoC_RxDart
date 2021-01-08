@@ -11,7 +11,7 @@ import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/movie_item.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'show_all_movie_bloc.dart';

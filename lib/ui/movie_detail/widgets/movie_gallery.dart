@@ -5,7 +5,7 @@ import 'package:flutter_sample/ui/common_widget/empty_list_widget.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/image_loader.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_bloc.dart';
 import 'package:provider/provider.dart';
 

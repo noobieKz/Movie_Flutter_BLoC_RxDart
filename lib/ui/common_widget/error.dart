@@ -6,7 +6,7 @@ class ErrorLoading extends StatelessWidget {
   final double width;
   final double height;
 
-  const ErrorLoading({Key key, this.message, this.width,@required this.height})
+  const ErrorLoading({Key key, this.message, this.width, @required this.height})
       : super(key: key);
 
   @override
@@ -35,6 +35,15 @@ class ErrorLoading extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.w400),
           ),
+          SizedBox(
+            height: 4,
+          ),
+          FlatButton(
+              color: Colors.white10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              onPressed: () {},
+              child: Text("Retry", style: TextStyle(color: Colors.white))),
         ],
       ),
     );

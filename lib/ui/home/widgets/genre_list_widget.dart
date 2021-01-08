@@ -4,7 +4,7 @@ import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'package:flutter_sample/ui/common_widget/genre_card.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:provider/provider.dart';
 

@@ -3,9 +3,10 @@ import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/di/app_module.dart';
+import 'package:flutter_sample/ui/common_widget/common_button.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:flutter_sample/ui/home/widgets/person_list_widget.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_bloc.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/backdrop_rating.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_sample/ui/movie_detail/widgets/description_movie.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/genre_list.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/movie_gallery.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/title_and_info.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -93,7 +95,21 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
               movie: movie,
             ),
             SizedBox(height: kDefaultPadding / 2),
-            TitleAndInfo(movie: movie),
+            TitleAndInfo(
+              movie: movie,
+              onAddClick: (movie) => showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                  backgroundColor: kColorChipItem,
+                  context: context,
+                  builder: (_) {
+                    return _bottomSheet;
+                  }),
+            ),
             GenreList(movie: movie),
             DescriptionMovie(movie: movie),
             SizedBox(height: kDefaultPadding / 2),
@@ -117,4 +133,62 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
       );
     }
   }
+
+  Widget get _bottomSheet => Container(
+        height: MediaQuery.of(context).size.height / 2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 4,
+            ),
+            SizedBox(
+              width: 16,
+              height: 2,
+              child: Container(
+                color: Colors.white54,
+              ),
+            ),
+            Spacer(),
+            CommonButton(
+              onClick: (){},
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+              icon: Icon(
+                Icons.bookmark_rounded,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Mask as watched",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            CommonButton(
+              onClick: (){},
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Add to favorite list",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            CommonButton(
+              onClick: (){},
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+              icon: Icon(
+                Icons.watch_later,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Watch it later",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+      );
 }

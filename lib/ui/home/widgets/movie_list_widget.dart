@@ -12,7 +12,7 @@ import 'package:flutter_sample/vo/type_show_all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../home_state.dart';
+import '../../../base/base_state.dart';
 
 // ignore: must_be_immutable
 class MovieListWidget extends StatelessWidget {

@@ -15,6 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 GetIt locator = GetIt.instance;
 
 Future setupLocator() async {
+  await provideDataModule();
+  provideBlocModule();
+}
+
+Future provideDataModule() async {
   Dio dio = Dio(BaseOptions(
     connectTimeout: 10000,
     receiveTimeout: 6000,
@@ -27,6 +32,9 @@ Future setupLocator() async {
 
   locator.registerSingleton<IRepository>(
       DefaultRepository(locator<IApiMovie>(), locator<PreferenceManager>()));
+}
+
+void provideBlocModule() {
   locator.registerSingleton<SplashBloc>(SplashBloc());
   locator.registerFactory<HomeBloc>(() => HomeBloc(locator<IRepository>()));
   locator.registerFactory(() => MovieDetailBloc(locator<IRepository>()));

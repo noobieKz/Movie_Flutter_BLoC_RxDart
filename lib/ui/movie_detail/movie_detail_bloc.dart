@@ -4,7 +4,7 @@ import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MovieDetailBloc extends BaseBloc {

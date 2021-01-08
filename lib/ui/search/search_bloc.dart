@@ -2,7 +2,7 @@ import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/irepository.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:flutter_sample/utils/exts.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
@@ -29,7 +29,7 @@ class SearchBloc extends BaseBloc {
   bool hasMoreData = true;
   int _currentPageLoadMore = 2;
   List<Movie> _movieCached = [];
-  static const FIRST_PAGE = 1;
+  static const _FIRST_PAGE = 1;
 
   BehaviorSubject<BaseState> _movieLoadMoreSubject =
       BehaviorSubject.seeded(StateLoaded<List<Movie>>([]));
@@ -38,7 +38,7 @@ class SearchBloc extends BaseBloc {
   //If use instant search, can add debounceTime like below
   Stream<BaseState> get movieResults =>
       _keyQuerySubject.stream.switchMap((value) {
-        return (value.item2 == FIRST_PAGE)
+        return (value.item2 == _FIRST_PAGE)
             ? BehaviorSubject.seeded(value)
                 .debounceTime(Duration(milliseconds: 0))    //change debounceTime
                 .switchMap((event) => _firstRequestState(value.item1))
@@ -65,7 +65,7 @@ class SearchBloc extends BaseBloc {
         query != _keyQuerySubject.value.item1) {
       _onNewQuery();
     }
-    _keyQuerySubject.add(Tuple2(query, FIRST_PAGE));
+    _keyQuerySubject.add(Tuple2(query, _FIRST_PAGE));
     Future.delayed(Duration(milliseconds: 300))
         .then((value) => _saveRecentSearch(query));
   }
@@ -90,7 +90,7 @@ class SearchBloc extends BaseBloc {
     yield StateLoading();
     try {
       MovieListResponse response =
-          await _repository.searchMovies(query, FIRST_PAGE);
+          await _repository.searchMovies(query, _FIRST_PAGE);
       if (response.error.isEmpty) {
         if (_currentPageLoadMore >= response.totalPages) {
           hasMoreData = false;

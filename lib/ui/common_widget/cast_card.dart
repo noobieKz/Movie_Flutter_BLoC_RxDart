@@ -8,7 +8,7 @@ import '../../constants.dart';
 class CastCard extends StatelessWidget {
   final Cast cast;
 
-  static const PREFIX = "https://image.tmdb.org/t/p/w500";
+  static const _PREFIX = "https://image.tmdb.org/t/p/w500";
 
   const CastCard({Key key, this.cast}) : super(key: key);
 
@@ -36,7 +36,7 @@ class CastCard extends StatelessWidget {
                   : ImageLoader(
                       width: 80,
                       height: 80,
-                      imageUrl: PREFIX + cast.profilePath,
+                      imageUrl: _PREFIX + cast.profilePath,
                     ),
             ),
           ),

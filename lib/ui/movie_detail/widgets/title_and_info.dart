@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
@@ -5,8 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TitleAndInfo extends StatelessWidget {
   final MovieDetailResponse movie;
+  final ValueChanged<MovieDetailResponse> onAddClick;
 
-  const TitleAndInfo({Key key, this.movie}) : super(key: key);
+  const TitleAndInfo({Key key, this.movie, this.onAddClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,9 @@ class TitleAndInfo extends StatelessWidget {
             height: 55,
             width: 55,
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                onAddClick(movie);
+              },
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),

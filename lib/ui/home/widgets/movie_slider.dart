@@ -13,7 +13,7 @@ import 'package:flutter_sample/ui/common_widget/image_loader.dart';
 import 'package:flutter_sample/ui/common_widget/loading.dart';
 import 'package:flutter_sample/ui/common_widget/view_all_button.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
-import 'package:flutter_sample/ui/home/home_state.dart';
+import 'package:flutter_sample/base/base_state.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 

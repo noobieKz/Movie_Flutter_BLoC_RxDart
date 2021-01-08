@@ -14,15 +14,15 @@ class ApiMovie implements IApiMovie {
 
   ApiMovie(this._dio);
 
-  static const String BASE_URL = 'https://api.themoviedb.org/3';
-  static const String API_KEY = "8a1227b5735a7322c4a43a461953d4ff";
+  static const String _BASE_URL = 'https://api.themoviedb.org/3';
+  static const String _API_KEY = "8a1227b5735a7322c4a43a461953d4ff";
 
   @override
   Future<MovieListResponse> getMovieByCategory(
       Category category, int page) async {
-    final nowPlayingUrl = '$BASE_URL/movie/${category.keyQuery}';
+    final nowPlayingUrl = '$_BASE_URL/movie/${category.keyQuery}';
     var params = {
-      "api_key": API_KEY,
+      "api_key": _API_KEY,
       "language": "en-US",
       "page": page,
     };
@@ -38,9 +38,9 @@ class ApiMovie implements IApiMovie {
 
   @override
   Future<MovieListResponse> getDiscoverMovie(int page) async {
-    final nowPlayingUrl = '$BASE_URL/discover/movie';
+    final nowPlayingUrl = '$_BASE_URL/discover/movie';
     var params = {
-      "api_key": API_KEY,
+      "api_key": _API_KEY,
       "language": "en-US",
       "page": page,
     };
@@ -56,9 +56,9 @@ class ApiMovie implements IApiMovie {
 
   @override
   Future<GenreListResponse> getGenresList() async {
-    final genresUrl = '$BASE_URL/genre/movie/list';
+    final genresUrl = '$_BASE_URL/genre/movie/list';
     var params = {
-      "api_key": API_KEY,
+      "api_key": _API_KEY,
     };
     try {
       Response response = await _dio.get(genresUrl, queryParameters: params);
@@ -73,12 +73,12 @@ class ApiMovie implements IApiMovie {
   @override
   Future<MovieListResponse> getMovieByGenreId(int genreId, int page) async {
     var params = {
-      "api_key": API_KEY,
+      "api_key": _API_KEY,
       "language": "en-US",
       "page": page,
       "with_genres": genreId
     };
-    String url = '$BASE_URL/discover/movie';
+    String url = '$_BASE_URL/discover/movie';
     try {
       Response response = await _dio.get(url, queryParameters: params);
       return MovieListResponse.fromJson(response.data);
@@ -91,10 +91,10 @@ class ApiMovie implements IApiMovie {
   @override
   Future<MovieDetailResponse> getMovieDetail(int movieId) async {
     var params = {
-      'api_key': API_KEY,
+      'api_key': _API_KEY,
     };
     try {
-      String url = '$BASE_URL/movie/$movieId';
+      String url = '$_BASE_URL/movie/$movieId';
       Response response = await _dio.get(url, queryParameters: params);
       MovieDetailResponse movieDetailResponse =
           MovieDetailResponse.fromJson(response.data);
@@ -109,10 +109,10 @@ class ApiMovie implements IApiMovie {
   @override
   Future<MovieGalleryResponse> getMovieGallery(int movieId) async {
     var params = {
-      'api_key': API_KEY,
+      'api_key': _API_KEY,
     };
     try {
-      String url = "$BASE_URL/movie/$movieId/images";
+      String url = "$_BASE_URL/movie/$movieId/images";
       final response = await _dio.get(url, queryParameters: params);
       if (response.statusCode == 200) {
         return MovieGalleryResponse.fromJson(response.data);
@@ -128,10 +128,10 @@ class ApiMovie implements IApiMovie {
   @override
   Future<CastCrewResponse> getCastCrewMovie(int movieId) async {
     var params = {
-      'api_key': API_KEY,
+      'api_key': _API_KEY,
     };
     try {
-      String url = "$BASE_URL/movie/$movieId/credits";
+      String url = "$_BASE_URL/movie/$movieId/credits";
       final response = await _dio.get(url, queryParameters: params);
       if (response.statusCode == 200) {
         return CastCrewResponse.fromJson(response.data);
@@ -147,12 +147,12 @@ class ApiMovie implements IApiMovie {
   @override
   Future<MovieListResponse> searchMovies(String query, int page) async {
     var params = {
-      'api_key': API_KEY,
+      'api_key': _API_KEY,
       "query": query,
       "page": page
     };
     try {
-      String url = "$BASE_URL/search/movie";
+      String url = "$_BASE_URL/search/movie";
       final response = await _dio.get(url, queryParameters: params);
       return MovieListResponse.fromJson(response.data);
     } catch (error, stacktrace) {
