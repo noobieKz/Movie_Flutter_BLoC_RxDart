@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
-import 'package:flutter_sample/ui/movie_detail/widgets/movie_gallery.dart';
+import 'package:flutter_sample/data/remote/response/rate_movie_response.dart';
 
+import '../../../constants.dart';
 import '../response/genre_list_response.dart';
 import '../response/movie_list_response.dart';
 
@@ -159,5 +159,11 @@ class ApiMovie implements IApiMovie {
       print("Exception occured: $error stackTrace: $stacktrace");
       return MovieListResponse.error("$error");
     }
+  }
+
+  @override
+  Future<RateMovieResponse> rateMovie(int value) {
+    // TODO: implement rateMovie
+    throw UnimplementedError();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/constants.dart';
-import 'package:flutter_sample/data/local/category.dart';
 
 class CategoryListWidget extends StatefulWidget {
   final Function(Category) onCategoryChange;

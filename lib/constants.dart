@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/data/local/category.dart';
 
 // Colos that use in our app
 const kSecondaryColor = Color(0xFFf48210);
@@ -17,6 +16,13 @@ const kDefaultShadow = BoxShadow(
   blurRadius: 4,
   color: Colors.black26,
 );
+
+class Category {
+  final String name;
+  final String keyQuery;
+
+  const Category({@required this.name, @required this.keyQuery});
+}
 
 const listCategory = [
   Category(name: "Now Playing", keyQuery: "now_playing"),
