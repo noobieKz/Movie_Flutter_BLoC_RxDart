@@ -8,7 +8,7 @@
 ## Tech Stacks
  - State Managerment: **BLoC pattern - RxDart**
  - Dependency Injection: **GetIt + Provider**
- - Data Local: **SharePreferences**
+ - Data Local: **SharePreferences + SQLite**
  - Getting API: **Dio**
  
  ### Screenshort
