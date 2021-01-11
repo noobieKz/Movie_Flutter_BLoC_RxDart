@@ -32,7 +32,7 @@ class _RatingDialogState extends State<RatingDialog> {
           const SizedBox(height: 8),
           Text(widget.title,
               style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
           const SizedBox(height: 8),
@@ -73,7 +73,7 @@ class _RatingDialogState extends State<RatingDialog> {
             color: Colors.white10,
           ),
           FlatButton(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Text(

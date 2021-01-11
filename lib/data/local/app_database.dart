@@ -5,6 +5,9 @@ import 'package:path/path.dart';
 const movieTable = "movie_table";
 const movieColId = "id";
 const movieColName = "name";
+const movieColDescription = "description";
+const movieColReleaseDate = "releaseDate";
+const movieColTime = "time";
 const movieColBackdropPath = "backdropPath";
 
 abstract class AppDatabase {
@@ -42,8 +45,9 @@ class _$AppDatabase extends AppDatabase {
 
   Future<void> _createDb(Database db, int newVersion) async {
     const SQL_CREATE_TABLE_MOVIE =
-        "CREATE TABLE $movieTable($movieColId INTEGER PRIMARY KEY, $movieColName TEXT,"
-        " $movieColBackdropPath TEXT)";
+        "CREATE TABLE $movieTable($movieColId INTEGER PRIMARY KEY, $movieColName TEXT, "
+        "$movieColDescription TEXT, $movieColReleaseDate TEXT, "
+        "$movieColTime TEXT, $movieColBackdropPath TEXT)";
 
     await db.execute(SQL_CREATE_TABLE_MOVIE);
   }
