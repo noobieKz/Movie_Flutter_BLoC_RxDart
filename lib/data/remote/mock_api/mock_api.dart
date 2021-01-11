@@ -1,10 +1,12 @@
-import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
+import 'package:flutter_sample/data/remote/response/rate_movie_response.dart';
+
+import '../../../constants.dart';
 
 class MockApi implements IApiMovie {
   @override
@@ -52,6 +54,12 @@ class MockApi implements IApiMovie {
   @override
   Future<MovieListResponse> searchMovies(String query, int page) {
     // TODO: implement searchMovies
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<RateMovieResponse> rateMovie(int value) {
+    // TODO: implement rateMovie
     throw UnimplementedError();
   }
 }

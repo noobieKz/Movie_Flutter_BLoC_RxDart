@@ -1,5 +1,6 @@
 import 'package:flutter_sample/data/irepository.dart';
-import 'package:flutter_sample/data/local/category.dart';
+import 'package:flutter_sample/data/local/entities/movie_entity.dart';
+import 'package:flutter_sample/data/local/movie_dao.dart';
 import 'package:flutter_sample/data/local/prefs/preferences.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
@@ -8,13 +9,15 @@ import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart'
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/utils/exts.dart';
 
+import '../../constants.dart';
 import '../remote/iapi_movie.dart';
 
 class DefaultRepository implements IRepository {
   IApiMovie _apiMovie;
   PreferenceManager _preferenceManager;
+  MovieDao _movieDao;
 
-  DefaultRepository(this._apiMovie, this._preferenceManager);
+  DefaultRepository(this._apiMovie, this._preferenceManager, this._movieDao);
 
   //local logic
   String _recentSearchCached = "";
@@ -76,5 +79,38 @@ class DefaultRepository implements IRepository {
     return _preferenceManager
         .saveRecentSearch(newRecent)
         .then((value) => newRecent.split("-"));
+  }
+
+  @override
+  String getListIdRated() {
+    return _preferenceManager.getListIdRated();
+  }
+
+  @override
+  String saveListIdRated(int id) {
+    String listId = _preferenceManager.getListIdRated();
+    String newListId = listId + "-$id";
+    _preferenceManager.saveMovieIdRated(newListId);
+    return newListId;
+  }
+
+  @override
+  Future<bool> addToFavorite(MovieEntity movieEntity) async {
+    return _movieDao.addToFavorite(movieEntity);
+  }
+
+  @override
+  Future<List<MovieEntity>> getFavoriteMovies() {
+    return _movieDao.getListFavorite();
+  }
+
+  @override
+  Future<bool> isFavorite(int movieId) {
+    return _movieDao.isFavorite(movieId);
+  }
+
+  @override
+  Future<bool> removeFromFavorite(MovieEntity movieEntity) {
+    return _movieDao.removeFromFavorite(movieEntity);
   }
 }

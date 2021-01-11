@@ -1,6 +1,7 @@
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/irepository.dart';
+import 'package:flutter_sample/data/local/entities/movie_entity.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
@@ -18,12 +19,16 @@ class MovieDetailBloc extends BaseBloc {
   BehaviorSubject<BaseState> _movieCastCrewSubject =
       BehaviorSubject<BaseState>();
 
+  BehaviorSubject<bool> _movieIsFavSubject = BehaviorSubject();
+
   //stream
   Stream<BaseState> get movieDetailStream => _movieDetailSubject.stream;
 
   Stream<BaseState> get movieGalleryStream => _movieGallerySubject.stream;
 
   Stream<BaseState> get castCrewStream => _movieCastCrewSubject.stream;
+
+  Stream<bool> get isFavStream => _movieIsFavSubject.stream;
 
   MovieDetailBloc(this._repository);
 
@@ -64,8 +69,7 @@ class MovieDetailBloc extends BaseBloc {
   Future getCastAndCrew(int movieId) async {
     try {
       _movieCastCrewSubject.add(StateLoading());
-      CastCrewResponse response =
-          await _repository.getCastCrewMovie(movieId);
+      CastCrewResponse response = await _repository.getCastCrewMovie(movieId);
       if (response.error.isEmpty) {
         _movieCastCrewSubject.add(StateLoaded<CastCrewResponse>(response));
       } else {
@@ -78,10 +82,36 @@ class MovieDetailBloc extends BaseBloc {
     }
   }
 
+  void setMovieToRated(int id) {
+    _repository.saveListIdRated(id);
+  }
+
+  bool isMovieRated(int id) {
+    return _repository.getListIdRated().contains(id.toString());
+  }
+
+  Future<bool> addToFavorite(MovieEntity movieEntity) async {
+    bool result = await _repository.addToFavorite(movieEntity);
+    if (result) _movieIsFavSubject.add(true);
+    return result;
+  }
+
+  Future<bool> removeFromFavorite(MovieEntity movieEntity) async {
+    bool result = await _repository.removeFromFavorite(movieEntity);
+    if (result) _movieIsFavSubject.add(false);
+    return result;
+  }
+
+  Future<void> isFavorite(int movieId) async {
+    bool isFav = await _repository.isFavorite(movieId);
+    _movieIsFavSubject.add(isFav);
+  }
+
   @override
   void dispose() {
     _movieCastCrewSubject.close();
     _movieDetailSubject.close();
     _movieGallerySubject.close();
+    _movieIsFavSubject.close();
   }
 }

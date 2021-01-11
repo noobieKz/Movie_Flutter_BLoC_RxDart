@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
-import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/di/app_module.dart';

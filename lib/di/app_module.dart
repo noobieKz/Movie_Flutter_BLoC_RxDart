@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sample/data/irepository.dart';
+import 'package:flutter_sample/data/local/app_database.dart';
+import 'package:flutter_sample/data/local/movie_dao.dart';
 import 'package:flutter_sample/data/local/prefs/preferences.dart';
 import 'package:flutter_sample/data/remote/api_impl/api_movie.dart';
 import 'package:flutter_sample/data/repository_impl/default_repository.dart';
@@ -30,8 +32,11 @@ Future provideDataModule() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   locator.registerSingleton(PreferenceManager(sharedPreferences));
 
-  locator.registerSingleton<IRepository>(
-      DefaultRepository(locator<IApiMovie>(), locator<PreferenceManager>()));
+  AppDatabase appDatabase = AppDatabase.build();
+  MovieDao movieDao = await appDatabase.movieDao;
+
+  locator.registerSingleton<IRepository>(DefaultRepository(
+      locator<IApiMovie>(), locator<PreferenceManager>(), movieDao));
 }
 
 void provideBlocModule() {

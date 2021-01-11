@@ -1,7 +1,8 @@
+import 'package:flutter_sample/data/local/entities/movie_entity.dart';
 import 'package:flutter_sample/data/remote/response/cast_crew_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
 
-import 'local/category.dart';
+import '../constants.dart';
 import 'remote/response/genre_list_response.dart';
 import 'remote/response/movie_detail_response.dart';
 import 'remote/response/movie_list_response.dart';
@@ -27,4 +28,16 @@ abstract class IRepository {
 
   Future<List<String>> saveRecentSearch(String query);
 
+  String getListIdRated();
+
+  String saveListIdRated(int id);
+
+  Future<bool> addToFavorite(MovieEntity movieEntity);
+
+  Future<bool> removeFromFavorite(MovieEntity movieEntity);
+
+
+  Future<List<MovieEntity>> getFavoriteMovies();
+
+  Future<bool> isFavorite(int movieId);
 }

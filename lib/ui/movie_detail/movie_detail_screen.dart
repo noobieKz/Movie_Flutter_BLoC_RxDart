@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
+import 'package:flutter_sample/data/local/entities/movie_entity.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
+import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/di/app_module.dart';
 import 'package:flutter_sample/ui/common_widget/common_button.dart';
 import 'package:flutter_sample/ui/common_widget/error.dart';
@@ -15,6 +17,7 @@ import 'package:flutter_sample/ui/movie_detail/widgets/description_movie.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/genre_list.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/movie_gallery.dart';
 import 'package:flutter_sample/ui/movie_detail/widgets/title_and_info.dart';
+import 'package:flutter_sample/utils/exts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +55,7 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
     _bloc.getMovieDetail(widget.movieId);
     _bloc.getMovieGallery(widget.movieId);
     _bloc.getCastAndCrew(widget.movieId);
+    _bloc.isFavorite(widget.movieId);
 
     super.initState();
   }
@@ -107,7 +111,7 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
                   backgroundColor: kColorChipItem,
                   context: context,
                   builder: (_) {
-                    return _bottomSheet;
+                    return _bottomSheet(movie);
                   }),
             ),
             GenreList(movie: movie),
@@ -134,7 +138,7 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
     }
   }
 
-  Widget get _bottomSheet => Container(
+  Widget _bottomSheet(MovieDetailResponse movie) => Container(
         height: MediaQuery.of(context).size.height / 2,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +156,7 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
             ),
             Spacer(),
             CommonButton(
-              onClick: (){},
+              onClick: () {},
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
               icon: Icon(
                 Icons.bookmark_rounded,
@@ -163,20 +167,36 @@ class __MovieDetailWidgetState extends State<_MovieDetailWidget> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            CommonButton(
-              onClick: (){},
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Add to favorite list",
-                style: TextStyle(color: Colors.white),
-              ),
+            StreamBuilder<bool>(
+              stream: _bloc.isFavStream,
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                bool isFav = (snapshot.hasData && snapshot.data == true);
+                return CommonButton(
+                  onClick: () async {
+                    if (!isFav)
+                      await _bloc.addToFavorite(
+                          MovieEntity.fromMovieDetailResponse(movie));
+                    else {
+                      await _bloc.removeFromFavorite(
+                          MovieEntity.fromMovieDetailResponse(movie));
+                    }
+                  },
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+                  icon: Icon(
+                    Icons.favorite,
+                    color: isFav ? Colors.red : Colors.white,
+                  ),
+                  title: Text(
+                    isFav
+                        ? "Remote from favorite list"
+                        : "Add to favorite list",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              },
             ),
             CommonButton(
-              onClick: (){},
+              onClick: () {},
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
               icon: Icon(
                 Icons.watch_later,

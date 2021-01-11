@@ -1,9 +1,10 @@
-import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_detail_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_gallery_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
+import 'package:flutter_sample/data/remote/response/rate_movie_response.dart';
 
+import '../../constants.dart';
 import 'response/cast_crew_response.dart';
 
 abstract class IApiMovie {
@@ -22,5 +23,7 @@ abstract class IApiMovie {
   Future<CastCrewResponse> getCastCrewMovie(int movieId);
 
   Future<MovieListResponse> searchMovies(String query, int page);
+
+  Future<RateMovieResponse> rateMovie(int value);
 
 }

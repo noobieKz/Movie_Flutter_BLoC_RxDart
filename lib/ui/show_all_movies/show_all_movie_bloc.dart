@@ -1,8 +1,6 @@
-import 'dart:ffi';
 
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/data/irepository.dart';
-import 'package:flutter_sample/data/local/category.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/base/base_state.dart';
