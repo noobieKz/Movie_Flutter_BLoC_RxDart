@@ -6,6 +6,7 @@ import 'package:flutter_sample/data/local/prefs/preferences.dart';
 import 'package:flutter_sample/data/remote/api_impl/api_movie.dart';
 import 'package:flutter_sample/data/repository_impl/default_repository.dart';
 import 'package:flutter_sample/data/remote/iapi_movie.dart';
+import 'package:flutter_sample/ui/favorite_movies/favorite_movie_bloc.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
 import 'package:flutter_sample/ui/movie_detail/movie_detail_bloc.dart';
 import 'package:flutter_sample/ui/search/search_bloc.dart';
@@ -45,4 +46,6 @@ void provideBlocModule() {
   locator.registerFactory(() => MovieDetailBloc(locator<IRepository>()));
   locator.registerFactory(() => ShowAllMovieBloc(locator<IRepository>()));
   locator.registerFactory(() => SearchBloc(locator<IRepository>()));
+  locator.registerFactory(() => FavoriteMovieBloc(locator<IRepository>()));
+
 }
