@@ -4,6 +4,7 @@ import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/di/app_module.dart';
 import 'package:flutter_sample/rounte_config/route_config.dart';
 import 'package:flutter_sample/ui/home/home_bloc.dart';
+import 'package:flutter_sample/ui/home/widgets/drawer_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_sample/ui/home/widgets/category_list_widget.dart';
 import 'package:flutter_sample/ui/home/widgets/genre_list_widget.dart';
@@ -72,11 +73,7 @@ class _HomeWidgetState extends State<_HomeWidget> {
           ],
         ),
       ),
-      drawer: Drawer(
-        child: Container(
-          color: kColorChipItem,
-        ),
-      ),
+      drawer: Drawer(child: DrawerLayout()),
     );
   }
 

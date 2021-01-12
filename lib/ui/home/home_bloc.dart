@@ -1,6 +1,7 @@
 import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/constants.dart';
 import 'package:flutter_sample/data/irepository.dart';
+import 'package:flutter_sample/data/local/entities/movie_entity.dart';
 import 'package:flutter_sample/data/remote/response/genre_list_response.dart';
 import 'package:flutter_sample/data/remote/response/movie_list_response.dart';
 import 'package:flutter_sample/base/base_state.dart';
@@ -21,12 +22,17 @@ class HomeBloc extends BaseBloc {
 
   BehaviorSubject<BaseState> _genresSubject = BehaviorSubject<BaseState>();
 
+  BehaviorSubject<BaseState> _favoriteMoviesSubject =
+      BehaviorSubject<BaseState>();
+
   //stream
   Stream<BaseState> get moviesByCategory => _movieByCategorySubject.stream;
 
   Stream<BaseState> get moviesDiscover => _movieDiscoverSubject.stream;
 
   Stream<BaseState> get genresListStream => _genresSubject.stream;
+
+  Stream<BaseState> get favoriteMovieStream => _favoriteMoviesSubject.stream;
 
   Category get currentCategory => _categorySubject.stream.value;
 
@@ -75,6 +81,12 @@ class HomeBloc extends BaseBloc {
     }
   }
 
+  Future getFavoriteList() async {
+    _favoriteMoviesSubject.add(StateLoading());
+    var favMovies = await _repository.getFavoriteMovies();
+    _favoriteMoviesSubject.add(StateLoaded<List<MovieEntity>>(favMovies));
+  }
+
   void changeCategory(Category category) {
     _categorySubject.add(category);
   }
@@ -85,5 +97,6 @@ class HomeBloc extends BaseBloc {
     _movieByCategorySubject.close();
     _movieDiscoverSubject.close();
     _genresSubject.close();
+    _favoriteMoviesSubject.close();
   }
 }

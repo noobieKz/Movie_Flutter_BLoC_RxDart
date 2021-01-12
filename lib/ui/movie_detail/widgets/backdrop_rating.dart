@@ -19,10 +19,12 @@ class BackdropRating extends StatefulWidget {
 
 class _BackdropRatingState extends State<BackdropRating> {
   MovieDetailBloc _bloc;
+  bool _isRated = false;
 
   @override
   void initState() {
     _bloc = context.read<MovieDetailBloc>();
+    _isRated = _bloc.isMovieRated(widget.movie.id);
     super.initState();
   }
 
@@ -109,7 +111,7 @@ class _BackdropRatingState extends State<BackdropRating> {
                     // Rate this
                     InkWell(
                       onTap: () async {
-                        if (_bloc.isMovieRated(widget.movie.id)) {
+                        if (_isRated) {
                           Scaffold.of(context).showSnackBar(SnackBar(
                             duration: Duration(milliseconds: 500),
                             content: Text("This movie already rated..."),
@@ -139,7 +141,7 @@ class _BackdropRatingState extends State<BackdropRating> {
                         children: <Widget>[
                           FaIcon(
                             FontAwesomeIcons.solidStar,
-                            color: _bloc.isMovieRated(widget.movie.id)
+                            color: _isRated
                                 ? kSecondaryColor
                                 : Colors.white,
                           ),
