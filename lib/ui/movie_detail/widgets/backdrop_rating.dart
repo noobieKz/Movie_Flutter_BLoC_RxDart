@@ -24,12 +24,12 @@ class _BackdropRatingState extends State<BackdropRating> {
   @override
   void initState() {
     _bloc = context.read<MovieDetailBloc>();
-    _isRated = _bloc.isMovieRated(widget.movie.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _isRated = _bloc.isMovieRated(widget.movie.id);
     return Container(
       height: widget.size.height * 0.5,
       width: widget.size.width,
