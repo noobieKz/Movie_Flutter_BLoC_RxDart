@@ -3,6 +3,8 @@ import 'package:flutter_sample/base/base_bloc.dart';
 import 'package:flutter_sample/base/base_state.dart';
 import 'package:flutter_sample/data/local/entities/movie_entity.dart';
 import 'package:flutter_sample/di/app_module.dart';
+import 'package:flutter_sample/rounte_config/route_config.dart';
+import 'package:flutter_sample/ui/common_widget/image_loader.dart';
 import 'package:flutter_sample/ui/favorite_movies/favorite_movie_bloc.dart';
 import 'package:flutter_sample/utils/exts.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +47,7 @@ class _FavoriteMovieWidgetState extends State<FavoriteMovieWidget> {
           if (snapshot.hasData && state is StateLoaded<List<MovieEntity>>) {
             loggerTag("test", state.value.length.toString());
             return ListView.builder(
+              padding: EdgeInsets.only(bottom: 16),
               physics: BouncingScrollPhysics(),
               itemCount: state.value.length,
               itemBuilder: (BuildContext context, int index) {
@@ -60,9 +63,50 @@ class _FavoriteMovieWidgetState extends State<FavoriteMovieWidget> {
                       style: TextStyle(color: Colors.white),
                     ),
                     children: [
-                      Text(
-                        item.description,
-                        style: TextStyle(color: Colors.white70),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: ImageLoader(
+                                    height: 100,
+                                    width: 80,
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/w780${item.backdropPath}"),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  item.description.length < 400
+                                      ? item.description
+                                      : item.description.substring(0, 400) +
+                                          "...",
+                                  style: TextStyle(color: Colors.white70),
+                                ),
+                              ),
+                            ],
+                          ),
+                          FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, RouteConfig.ROUTE_MOVIE_DETAIL,
+                                    arguments: item.id);
+                              },
+                              child: Text(
+                                "See Detail",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ))
+                        ],
                       ),
                     ],
                   ),
