@@ -2,8 +2,7 @@
 
  - A sample Flutter application with main purpose is learning.
 
- - It just is a simple project for beginner learns Flutter (as me), focus on Bloc pattern, RxDart, Clean code...to architect a flutter project A Flutter project for learning.
- - It just has a few features and still in progress ...
+ - It just is a simple project for beginner learns Flutter, focus on Bloc pattern, RxDart, Clean code...to architect a flutter project A Flutter project for learning.
 
 ## Tech Stacks
  - State Managerment: **BLoC pattern - RxDart**
